@@ -120,7 +120,7 @@ const AddListingPage = () => {
         });
         
         setTimeout(() => {
-          window.location.href = '/feed';
+          window.location.href = '/profile';
         }, 2000);
       } else {
         setStatus({
@@ -407,7 +407,7 @@ const AddListingPage = () => {
 
           {/* Cancel Button */}
           <button 
-            onClick={() => window.location.href = '/feed'}
+            onClick={() => window.location.href = '/profile'}
             disabled={isLoading}
             className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-xl transition-colors"
           >

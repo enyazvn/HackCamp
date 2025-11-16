@@ -57,7 +57,7 @@ const LoginPage = () => {
         
         setTimeout(() => {
           // Redirect to add listing page
-          window.location.href = '/add-listing';
+          window.location.href = '/profile';
         }, 1500);
       } else {
         setStatus({ 

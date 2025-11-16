@@ -10,6 +10,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegistrationPage';
 import AddListingPage from './AddListingPage';
+import ProfilePage from './ProfilePage';
 
 // --- The main App Component where routing is defined ---
 function App() {
@@ -26,6 +27,9 @@ function App() {
       
       {/* Add Listing page */}
       <Route path="/add-listing" element={<AddListingPage />} />
+      
+      {/* Profile page */}
+      <Route path="/profile" element={<ProfilePage />} />
       
       {/* Placeholder for Feed page */}
       <Route path="/feed" element={
