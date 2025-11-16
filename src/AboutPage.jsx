@@ -87,6 +87,7 @@ const LikesScreen = () => {
         </div>
 
         {/* Scrollable Content */}
+
         <div className="flex-1 overflow-y-auto pb-24">
           {/* Cover Image with Profile Picture */}
           <div className="relative">
@@ -175,7 +176,7 @@ const LikesScreen = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="space-y-3">
+            <div className="space-y-2">
               {/* Primary Actions */}
               <div className="flex gap-2">
                 <button
