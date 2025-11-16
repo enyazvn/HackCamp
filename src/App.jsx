@@ -6,71 +6,43 @@ import './App.css';
 // Import necessary components from react-router-dom
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
-// Import your new page component
-import AboutPage from './AboutPage'; 
-
-// --- The default page content (your Home page) ---
-function HomePage() {
-  const [count, setCount] = useState(0);
-  const navigate = useNavigate(); // Hook for programmatic navigation
-
-  const handleGoToAbout = () => {
-    // Navigate to the path defined for the AboutPage
-    navigate('/about'); 
-  };
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React (Home Page)</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      
-      {/* --- Your Redirection Button --- */}
-      <button onClick={handleGoToAbout} style={{ marginTop: '20px' }}>
-        Go to About Page
-      </button>
-      {/* --------------------------------- */}
-      <div className="text-1xl font-bold">
-        <h1>Hello Tailwind!</h1>
-      </div>
-    </>
-  );
-}
-// ----------------------------------------------------
-
+// Import your page components
+import LoginPage from './LoginPage';
+import RegisterPage from './RegistrationPage';  // Note: exports as RegisterPage
 
 // --- The main App Component where routing is defined ---
 function App() {
   return (
     <Routes>
-      {/* Route for the default path (the Home page) */}
-      <Route path="/" element={<HomePage />} />
+      {/* Default route - Login Page */}
+      <Route path="/" element={<LoginPage />} />
       
-      {/* Route for your new separate page */}
-      <Route path="/about" element={<AboutPage />} />
+      {/* Login page (explicit route) */}
+      <Route path="/login" element={<LoginPage />} />
       
-      {/* Optionally, you can add a 404 page */}
-      <Route path="*" element={<h1>404: Page Not Found</h1>} />
+      {/* Registration page */}
+      <Route path="/register" element={<RegisterPage />} />
+      
+      {/* 404 page - catch all other routes */}
+      <Route path="*" element={
+        <div style={{ 
+          display: 'flex', 
+          flexDirection: 'column',
+          alignItems: 'center', 
+          justifyContent: 'center',
+          minHeight: '100vh',
+          textAlign: 'center',
+          padding: '20px'
+        }}>
+          <h1 style={{ fontSize: '48px', marginBottom: '20px' }}>404</h1>
+          <p style={{ marginBottom: '20px' }}>Page Not Found</p>
+          <a href="/" style={{ color: '#FF6666', textDecoration: 'none', fontWeight: 'bold' }}>
+            Go back to Login
+          </a>
+        </div>
+      } />
     </Routes>
   );
 }
-// ----------------------------------------------------
 
 export default App;

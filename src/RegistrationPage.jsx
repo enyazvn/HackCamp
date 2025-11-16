@@ -3,7 +3,7 @@ import { Heart } from 'lucide-react';
 
 const REGISTER_URL = 'http://localhost:3000/api/register';
 
-const AboutPage = () => {
+const RegisterPage = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -256,4 +256,4 @@ const AboutPage = () => {
   );
 };
 
-export default AboutPage;
+export default RegisterPage;
