@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Heart } from 'lucide-react';
+// Keeping the Heart import just in case, though the icon element was removed in the new structure
+import { Heart } from 'lucide-react'; 
 
 const REGISTER_URL = 'http://localhost:3000/api/register';
 
@@ -25,6 +26,7 @@ const RegisterPage = () => {
   };
 
   const handleSubmit = async () => {
+    // BACKEND LOGIC: Validation is preserved
     if (!formData.firstname || !formData.email || !formData.password) {
       setStatus({ 
         message: 'Please fill in all required fields.', 
@@ -58,6 +60,7 @@ const RegisterPage = () => {
     };
 
     try {
+      // BACKEND LOGIC: API call and handling is preserved
       const response = await fetch(REGISTER_URL, {
         method: 'POST',
         headers: {
@@ -94,36 +97,38 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
-      <div className="w-full h-full max-w-sm bg-gradient-to-b from-pink-50 to-white flex flex-col justify-start px-6 py-8 rounded-lg shadow-lg overflow-y-auto">
+    // Outer Container: White frame (New Styling)
+    <div className="flex items-center justify-center h-screen w-screen bg-white"> 
+      
+      {/* Inner Container: Dark Green Mobile Frame (New Styling) */}
+      <div 
+        className="w-full h-full max-w-sm bg-green-800 flex flex-col px-8 py-12 shadow-lg rounded-lg"
+      >
         
-        {/* Header with Logo */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-pink-500 rounded-full mb-4">
-            <Heart className="w-8 h-8 text-white" fill="currentColor" />
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to Renewd</h1>
-          <p className="text-gray-600 text-sm">Swap sustainable, live local</p>
+        {/* Header (New Styling) */}
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-white mb-2">Create Account</h1> 
+          <p className="text-lime-300 text-sm">Join RENEW'D and match with clothes you'll love</p>
         </div>
 
-        {/* Status Message */}
+        {/* Status Message (New Styling) */}
         {status.message && (
-          <div className={`mb-6 p-4 rounded-lg text-sm font-medium ${
+          <div className={`mb-4 p-3 rounded-lg text-sm font-medium ${
             status.isSuccess 
-              ? 'bg-green-50 text-green-800 border border-green-200' 
-              : 'bg-red-50 text-red-800 border border-red-200'
+              ? 'bg-lime-400 text-gray-900' 
+              : 'bg-red-600 text-white'    
           }`}>
             {status.message}
           </div>
         )}
 
-        {/* Registration Form */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 space-y-4 mb-6">
+        {/* Form (New Styling) */}
+        <div className="space-y-4 overflow-y-auto"> 
           
           {/* First Name */}
           <div>
-            <label htmlFor="firstname" className="block text-sm font-medium text-gray-700 mb-2">
-              What's your first name? *
+            <label htmlFor="firstname" className="block text-sm font-semibold text-white mb-2">
+              First Name *
             </label>
             <input
               type="text"
@@ -133,14 +138,15 @@ const RegisterPage = () => {
               value={formData.firstname}
               onChange={handleChange}
               disabled={isLoading}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+              // Input Styling (New Styling)
+              className="w-full px-4 py-3 bg-white border-0 rounded-full focus:ring-2 focus:ring-lime-400 focus:outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900"
             />
           </div>
 
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email address *
+            <label htmlFor="email" className="block text-sm font-semibold text-white mb-2">
+              Email *
             </label>
             <input
               type="email"
@@ -150,14 +156,15 @@ const RegisterPage = () => {
               value={formData.email}
               onChange={handleChange}
               disabled={isLoading}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+              // Input Styling (New Styling)
+              className="w-full px-4 py-3 bg-white border-0 rounded-full focus:ring-2 focus:ring-lime-400 focus:outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900"
             />
           </div>
 
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-              Create a password *
+            <label htmlFor="password" className="block text-sm font-semibold text-white mb-2">
+              Password *
             </label>
             <input
               type="password"
@@ -167,14 +174,16 @@ const RegisterPage = () => {
               value={formData.password}
               onChange={handleChange}
               disabled={isLoading}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+              // Input Styling (New Styling)
+              className="w-full px-4 py-3 bg-white border-0 rounded-full focus:ring-2 focus:ring-lime-400 focus:outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900"
             />
-            <p className="mt-1 text-xs text-gray-500">Must be at least 8 characters</p>
+            {/* Helper text (New Styling) */}
+            <p className="mt-1 text-xs text-gray-300">Must be at least 8 characters</p>
           </div>
 
           {/* Birthday */}
           <div>
-            <label htmlFor="birthday" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="birthday" className="block text-sm font-semibold text-white mb-2">
               Birthday <span className="text-gray-400 font-normal">(optional)</span>
             </label>
             <input
@@ -184,14 +193,15 @@ const RegisterPage = () => {
               value={formData.birthday}
               onChange={handleChange}
               disabled={isLoading}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+              // Input Styling (New Styling)
+              className="w-full px-4 py-3 bg-white border-0 rounded-full focus:ring-2 focus:ring-lime-400 focus:outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900"
             />
           </div>
 
           {/* Preferred Meeting Location */}
           <div>
-            <label htmlFor="preferredMeetingLocation" className="block text-sm font-medium text-gray-700 mb-2">
-              Preferred meeting location
+            <label htmlFor="preferredMeetingLocation" className="block text-sm font-semibold text-white mb-2">
+              Preferred Meeting Location
             </label>
             <input
               type="text"
@@ -201,35 +211,37 @@ const RegisterPage = () => {
               value={formData.preferredMeetingLocation}
               onChange={handleChange}
               disabled={isLoading}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+              // Input Styling (New Styling)
+              className="w-full px-4 py-3 bg-white border-0 rounded-full focus:ring-2 focus:ring-lime-400 focus:outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900"
             />
-            <p className="mt-1 text-xs text-gray-500">Where do you prefer to swap items?</p>
+            {/* Helper text (New Styling) */}
+            <p className="mt-1 text-xs text-gray-300">Where do you prefer to swap items?</p>
           </div>
 
-          {/* Terms Checkbox */}
-          <div className="flex items-start">
+          {/* Terms Checkbox (New Styling) */}
+          <div className="flex items-start pt-2">
             <input 
               type="checkbox" 
               id="terms" 
               checked={termsAccepted}
               onChange={(e) => setTermsAccepted(e.target.checked)}
               disabled={isLoading}
-              className="mt-1 h-4 w-4 text-pink-500 border-gray-300 rounded focus:ring-pink-500"
+              className="mt-1 h-4 w-4 text-lime-400 border-gray-400 rounded focus:ring-lime-400"
             />
-            <label htmlFor="terms" className="ml-2 text-xs text-gray-600">
-              I agree to the <span className="text-pink-500 font-medium">Terms of Service</span> and <span className="text-pink-500 font-medium">Privacy Policy</span>
+            <label htmlFor="terms" className="ml-2 text-xs text-white"> 
+              I agree to the <span className="text-lime-400 font-semibold underline">Terms of Service</span> and <span className="text-lime-400 font-semibold underline">Privacy Policy</span>
             </label>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit Button (New Styling) */}
           <button 
             onClick={handleSubmit}
             disabled={isLoading} 
-            className="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-4 px-6 rounded-xl transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+            className="w-full bg-lime-400 hover:bg-lime-500 text-gray-900 font-semibold py-4 px-6 rounded-full transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg mt-6"
           >
             {isLoading ? (
               <span className="flex items-center justify-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
@@ -241,11 +253,11 @@ const RegisterPage = () => {
           </button>
         </div>
 
-        {/* Sign In Link */}
-        <div className="text-center mb-4">
-          <p className="text-sm text-gray-600">
+        {/* Sign In Link (New Styling) */}
+        <div className="text-center mt-6">
+          <p className="text-sm text-gray-300"> 
             Already have an account?{' '}
-            <a href="/login" className="text-pink-500 font-semibold hover:text-pink-600 transition-colors">
+            <a href="/login" className="text-lime-400 font-bold hover:text-lime-300 transition-colors underline">
               Sign In
             </a>
           </p>
