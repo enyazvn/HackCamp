@@ -7,6 +7,7 @@ import './App.css';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 // Import your page components
+import LandingPage from './LandingPage';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegistrationPage';
 import AddListingPage from './AddListingPage';
@@ -19,8 +20,8 @@ import MatchesPage from './MatchesPage';
 function App() {
   return (
     <Routes>
-      {/* Default route - Login Page */}
-      <Route path="/" element={<LoginPage />} />
+      {/* Default route - Landing Page */}
+      <Route path="/" element={<LandingPage />} /> 
       
       {/* Login page (explicit route) */}
       <Route path="/login" element={<LoginPage />} />

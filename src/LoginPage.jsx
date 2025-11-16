@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Heart } from 'lucide-react';
+// Heart import is kept from the old version, although the logo div style is removed in the new UI.
+import { Heart } from 'lucide-react'; 
 
 const LOGIN_URL = 'http://localhost:3000/api/login';
 
@@ -21,6 +22,7 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async () => {
+    // LOGIC: Input validation is preserved
     if (!formData.email || !formData.password) {
       setStatus({ 
         message: 'Please fill in all fields.', 
@@ -33,6 +35,7 @@ const LoginPage = () => {
     setStatus({ message: '', isSuccess: false });
 
     try {
+      // LOGIC: API Call, response handling, and local storage setting is preserved
       const response = await fetch(LOGIN_URL, {
         method: 'POST',
         headers: {
@@ -53,8 +56,9 @@ const LoginPage = () => {
           isSuccess: true 
         });
         
+        // LOGIC: Redirect target updated from '/profile' (old) to '/feed' (new) to match the new version's redirect
         setTimeout(() => {
-          window.location.href = '/profile';
+          window.location.href = '/feed';
         }, 1500);
       } else {
         setStatus({ 
@@ -73,6 +77,7 @@ const LoginPage = () => {
     }
   };
 
+  // LOGIC: handleKeyPress is preserved
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleSubmit();
@@ -80,84 +85,88 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
-      <div className="w-full h-full max-w-sm bg-gradient-to-b from-pink-50 to-white flex flex-col justify-center px-6 py-8 rounded-lg shadow-lg overflow-y-auto">
+    // Outer Container: White background (New Styling)
+    <div className="flex items-center justify-center h-screen w-screen bg-white">
+      
+      {/* Inner Mobile Frame: Dark Green, Centered, Gap (New Styling) */}
+      <div 
+        className="w-full h-full max-w-sm bg-green-800 flex flex-col justify-center items-center px-8 py-12 shadow-lg rounded-lg gap-8" 
+      >
         
-        {/* Header with Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-pink-500 rounded-full mb-4">
-            <Heart className="w-8 h-8 text-white" fill="currentColor" />
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-          <p className="text-gray-600 text-sm">Sign in to continue swapping</p>
+        {/* Header (New Styling) */}
+        <div className="text-center"> 
+          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+          <p className="text-lime-300 text-sm">Sign in to continue swapping</p>
         </div>
 
-        {/* Status Message */}
+        {/* Status Message (New Styling) */}
         {status.message && (
-          <div className={`mb-6 p-4 rounded-lg text-sm font-medium ${
+          <div className={`p-3 rounded-lg text-sm font-medium text-center ${ 
             status.isSuccess 
-              ? 'bg-green-50 text-green-800 border border-green-200' 
-              : 'bg-red-50 text-red-800 border border-red-200'
+              ? 'bg-lime-400 text-gray-900'
+              : 'bg-red-600 text-white'     
           }`}>
             {status.message}
           </div>
         )}
 
-        {/* Login Form */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 space-y-5">
+        {/* Form Container (New Styling) */}
+        <div className="space-y-4 w-full"> 
           
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email address
+            <label htmlFor="email" className="block text-sm font-semibold text-white mb-2 text-center">
+              Email
             </label>
             <input
               type="email"
               id="email"
               name="email"
-              placeholder="you@example.com"
+              placeholder="thriftlover21@gmail.com"
               value={formData.email}
               onChange={handleChange}
               onKeyPress={handleKeyPress}
               disabled={isLoading}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+              // Input Styling (New Styling)
+              className="w-full px-4 py-3 bg-white border-0 rounded-full focus:ring-2 focus:ring-lime-400 focus:outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 text-center" 
             />
           </div>
 
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="password" className="block text-sm font-semibold text-white mb-2 text-center">
               Password
             </label>
             <input
               type="password"
               id="password"
               name="password"
-              placeholder="Enter your password"
+              placeholder="••••••••••••••••"
               value={formData.password}
               onChange={handleChange}
               onKeyPress={handleKeyPress}
               disabled={isLoading}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+              // Input Styling (New Styling)
+              className="w-full px-4 py-3 bg-white border-0 rounded-full focus:ring-2 focus:ring-lime-400 focus:outline-none transition-all disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-900 text-center" 
             />
           </div>
 
-          {/* Forgot Password Link */}
-          <div className="flex justify-end">
-            <a href="/forgot-password" className="text-sm text-pink-500 hover:text-pink-600 font-medium transition-colors">
-              Forgot password?
+          {/* Forgot Password Link (New Styling) */}
+          <div className="flex justify-center"> 
+            <a href="/forgot-password" className="text-sm text-gray-300 hover:text-white font-medium transition-colors underline">
+              forget your password?
             </a>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit Button (New Styling) */}
           <button 
             onClick={handleSubmit}
             disabled={isLoading} 
-            className="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-4 px-6 rounded-xl transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+            className="w-full bg-lime-400 hover:bg-lime-500 text-gray-900 font-semibold py-4 px-6 rounded-full transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed shadow-lg mt-6"
           >
             {isLoading ? (
               <span className="flex items-center justify-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
@@ -167,33 +176,44 @@ const LoginPage = () => {
               'Sign In'
             )}
           </button>
-
-          {/* Divider */}
+          
+          {/* Divider (Old Logic, New Styling) */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200"></div>
+              <div className="w-full border-t border-gray-600"></div> {/* Adjusted color for dark background */}
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-gray-500">or</span>
+              <span className="px-4 bg-green-800 text-gray-300">or</span> {/* Adjusted color for dark background */}
             </div>
           </div>
 
-          {/* Quick Demo Login */}
+          {/* Quick Demo Login (Old Logic, New Styling) */}
           <button 
+            // LOGIC: Handler preserved
             onClick={() => {
               setFormData({ email: 'demo@renewd.com', password: 'demo1234' });
             }}
-            className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-xl transition-colors"
+            // Styling updated to match green theme
+            className="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-full transition-colors"
           >
             Use Demo Account
           </button>
         </div>
 
-        {/* Sign Up Link */}
-        <div className="text-center mt-6">
-          <p className="text-sm text-gray-600">
+        {/* Decorative Image Space (New Styling) - Placed after form to avoid excessive scrolling on smaller screens */}
+        <div className="w-full text-center mt-6"> 
+          <div className="w-full h-24 flex items-center justify-center"> {/* Height reduced to accommodate the demo button/divider */}
+            <div className="text-gray-300 text-sm opacity-50">
+              Match with clothes you'll love
+            </div>
+          </div>
+        </div>
+
+        {/* Sign Up Link (New Styling) */}
+        <div className="text-center mt-0"> 
+          <p className="text-sm text-gray-300">
             Don't have an account?{' '}
-            <a href="/register" className="text-pink-500 font-semibold hover:text-pink-600 transition-colors">
+            <a href="/register" className="text-lime-400 font-bold hover:text-lime-300 transition-colors underline">
               Sign Up
             </a>
           </p>
