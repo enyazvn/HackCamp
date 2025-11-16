@@ -21,7 +21,6 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async () => {
-    // Validation
     if (!formData.email || !formData.password) {
       setStatus({ 
         message: 'Please fill in all fields.', 
@@ -45,7 +44,6 @@ const LoginPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Store user data in localStorage for session management
         localStorage.setItem('userId', data.userId);
         localStorage.setItem('userEmail', data.email);
         localStorage.setItem('userFirstname', data.firstname);
@@ -56,7 +54,6 @@ const LoginPage = () => {
         });
         
         setTimeout(() => {
-          // Redirect to add listing page
           window.location.href = '/profile';
         }, 1500);
       } else {
@@ -83,8 +80,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-md">
+    <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
+      <div className="w-full h-full max-w-sm bg-gradient-to-b from-pink-50 to-white flex flex-col justify-center px-6 py-8 rounded-lg shadow-lg overflow-y-auto">
         
         {/* Header with Logo */}
         <div className="text-center mb-8">
@@ -181,7 +178,7 @@ const LoginPage = () => {
             </div>
           </div>
 
-          {/* Quick Demo Login (for testing) */}
+          {/* Quick Demo Login */}
           <button 
             onClick={() => {
               setFormData({ email: 'demo@renewd.com', password: 'demo1234' });

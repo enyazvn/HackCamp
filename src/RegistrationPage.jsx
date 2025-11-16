@@ -25,7 +25,6 @@ const RegisterPage = () => {
   };
 
   const handleSubmit = async () => {
-    // Validation
     if (!formData.firstname || !formData.email || !formData.password) {
       setStatus({ 
         message: 'Please fill in all required fields.', 
@@ -95,11 +94,11 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-md">
+    <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
+      <div className="w-full h-full max-w-sm bg-gradient-to-b from-pink-50 to-white flex flex-col justify-start px-6 py-8 rounded-lg shadow-lg overflow-y-auto">
         
         {/* Header with Logo */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-pink-500 rounded-full mb-4">
             <Heart className="w-8 h-8 text-white" fill="currentColor" />
           </div>
@@ -119,7 +118,7 @@ const RegisterPage = () => {
         )}
 
         {/* Registration Form */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 space-y-5">
+        <div className="bg-white rounded-2xl shadow-lg p-6 space-y-4 mb-6">
           
           {/* First Name */}
           <div>
@@ -243,7 +242,7 @@ const RegisterPage = () => {
         </div>
 
         {/* Sign In Link */}
-        <div className="text-center mt-6">
+        <div className="text-center mb-4">
           <p className="text-sm text-gray-600">
             Already have an account?{' '}
             <a href="/login" className="text-pink-500 font-semibold hover:text-pink-600 transition-colors">
