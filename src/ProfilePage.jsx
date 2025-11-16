@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Settings, ChevronLeft, Plus } from 'lucide-react';
+import { MapPin, Settings, ChevronLeft, Plus, LogOut } from 'lucide-react';
 
 const PROFILE_API_URL = 'http://localhost:3000/api/profile';
 
@@ -101,6 +101,15 @@ const ProfilePage = () => {
     }
   };
 
+  const handleLogout = () => {
+    if (confirm('Are you sure you want to logout?')) {
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userFirstname');
+      window.location.href = '/login';
+    }
+  };
+
   const getStatusColor = (status) => {
     const statusLower = status && status.toLowerCase();
     switch(statusLower) {
@@ -156,12 +165,18 @@ const ProfilePage = () => {
     <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
       <div className="w-full h-full max-w-sm bg-white flex flex-col rounded-lg shadow-lg relative">
         <div className="bg-white px-4 py-3 border-b border-neutral-200 rounded-t-lg flex items-center justify-between">
-          <button onClick={() => window.location.href = '/feed'} className="p-1">
+          <button onClick={() => window.location.href = '/feed'} className="p-1 hover:bg-gray-100 rounded-lg transition-colors">
             <ChevronLeft className="w-6 h-6 text-neutral-900" />
           </button>
-          <button className="p-1">
-            <Settings className="w-6 h-6 text-neutral-900" />
-          </button>
+          <h2 className="text-lg font-semibold text-neutral-900">Profile</h2>
+          <div className="flex items-center gap-2">
+            <button onClick={handleLogout} className="p-1 hover:bg-gray-100 rounded-lg transition-colors" title="Logout">
+              <LogOut className="w-5 h-5 text-neutral-900" />
+            </button>
+            <button className="p-1 hover:bg-gray-100 rounded-lg transition-colors" title="Settings">
+              <Settings className="w-5 h-5 text-neutral-900" />
+            </button>
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto pb-16">
