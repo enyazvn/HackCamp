@@ -3,7 +3,7 @@
 RENEW'D is a match-based shopping experience that lets users refresh their wardrobe without spending any money!
 
 
-**Buying new clothes can be expensive.**
+### Buying new clothes can be expensive. 
 
 RENEW'D solves this by turning your closet into currency
 
