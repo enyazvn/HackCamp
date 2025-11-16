@@ -1,25 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, X, MessageCircle, ExternalLink, MapPin, Tag } from 'lucide-react';
-
-// Footer Components
-const FooterButton = ({title}) => {
-  return (
-    <button className="px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors">
-      {title}
-    </button>
-  );
-};
-
-const Footer = () => {
-  return (
-    <div className="flex flex-row gap-1.5 items-center justify-center bg-white border-t border-neutral-200 py-2">
-        <FooterButton title={"Home"} />
-        <FooterButton title={"Likes"} />
-        <FooterButton title={"Matches"} />
-        <FooterButton title={"Profile"} />
-    </div>
-  );
-};
+import { Heart, X, MessageCircle, ExternalLink, MapPin, Tag, Users } from 'lucide-react';
 
 const LikesScreen = () => {
   const [likes] = useState([
@@ -89,25 +69,25 @@ const LikesScreen = () => {
     return (
       <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
         <div className="w-full h-full max-w-sm bg-white flex flex-col items-center justify-center p-4">
-          <Heart className="w-16 h-16 text-neutral-300 mb-4" />
-          <p className="text-neutral-600 text-lg font-medium">No likes yet</p>
-          <p className="text-neutral-400 text-sm mt-2">Check back later!</p>
+          <Heart className="w-16 h-16 text-gray-300 mb-4" />
+          <p className="text-gray-600 text-lg font-medium">No likes yet</p>
+          <p className="text-gray-400 text-sm mt-2">Check back later!</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-screen bg-neutral-900">
-      <div className="w-full h-full max-w-sm bg-white flex flex-col">
+    <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
+      <div className="w-full h-full max-w-sm bg-white flex flex-col rounded-lg shadow-lg relative">
         {/* Header */}
-        <div className="bg-white px-4 py-3 border-b border-neutral-200">
-          <h1 className="text-xl font-bold text-neutral-900">Likes</h1>
-          <p className="text-sm text-neutral-500">{likes.length} people interested</p>
+        <div className="bg-white px-6 pt-6 pb-4 border-b border-gray-200 rounded-t-lg">
+          <h1 className="text-2xl font-bold text-gray-900">Likes</h1>
+          <p className="text-sm text-gray-500 mt-1">{likes.length} people interested</p>
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto pb-24">
           {/* Cover Image with Profile Picture */}
           <div className="relative">
             <img 
@@ -125,12 +105,12 @@ const LikesScreen = () => {
           </div>
 
           {/* Item Details */}
-          <div className="p-4 space-y-4">
+          <div className="px-6 py-6 space-y-6">
             {/* Title and Status */}
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h2 className="text-xl font-bold text-neutral-900">{currentLike.title}</h2>
-                <p className="text-sm text-neutral-600 mt-1">{currentLike.size} | Woman | {currentLike.location}</p>
+                <h2 className="text-xl font-bold text-gray-900">{currentLike.title}</h2>
+                <p className="text-sm text-gray-600 mt-1">{currentLike.size} | Woman | {currentLike.location}</p>
               </div>
               <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                 currentLike.status === 'Active' 
@@ -143,15 +123,15 @@ const LikesScreen = () => {
 
             {/* Brand and Condition */}
             <div className="space-y-2">
-              <div className="flex items-center text-sm text-neutral-600">
+              <div className="flex items-center text-sm text-gray-600">
                 <Tag className="w-4 h-4 mr-2" />
                 {currentLike.brand}
               </div>
-              <div className="flex items-center text-sm text-neutral-600">
+              <div className="flex items-center text-sm text-gray-600">
                 <span className="mr-2">📦</span>
                 {currentLike.condition}
               </div>
-              <div className="flex items-center text-sm text-neutral-600">
+              <div className="flex items-center text-sm text-gray-600">
                 <MapPin className="w-4 h-4 mr-2" />
                 {currentLike.location}
               </div>
@@ -162,7 +142,7 @@ const LikesScreen = () => {
               {currentLike.colors.map((color, idx) => (
                 <span 
                   key={idx}
-                  className="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-xs font-medium"
+                  className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium"
                 >
                   {color}
                 </span>
@@ -174,7 +154,7 @@ const LikesScreen = () => {
               {currentLike.categories.map((category, idx) => (
                 <span 
                   key={idx}
-                  className="px-3 py-1 bg-neutral-200 text-neutral-800 rounded-full text-xs font-medium"
+                  className="px-3 py-1 bg-gray-200 text-gray-800 rounded-full text-xs font-medium"
                 >
                   {category}
                 </span>
@@ -182,52 +162,79 @@ const LikesScreen = () => {
             </div>
 
             {/* Details */}
-            <div className="bg-neutral-50 rounded-lg p-3">
-              <h3 className="font-semibold text-neutral-900 text-sm mb-2">Details</h3>
-              <p className="text-sm text-neutral-700">{currentLike.details}</p>
+            <div className="bg-gray-50 rounded-lg p-3">
+              <h3 className="text-sm font-semibold text-gray-900 mb-2">Details</h3>
+              <p className="text-sm text-gray-700">{currentLike.details}</p>
             </div>
 
             {/* Looking For */}
             <div className="bg-blue-50 rounded-lg p-3">
-              <h3 className="font-semibold text-neutral-900 text-sm mb-2">Looking for</h3>
-              <p className="text-sm text-neutral-700">{currentLike.lookingFor}</p>
-              <p className="text-xs text-neutral-500 mt-1 italic">Open to shoes size 6!</p>
+              <h3 className="text-sm font-semibold text-gray-900 mb-2">Looking for</h3>
+              <p className="text-sm text-gray-700">{currentLike.lookingFor}</p>
+              <p className="text-xs text-gray-500 mt-1 italic">Open to shoes size 6!</p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-3">
+              {/* Primary Actions */}
+              <div className="flex gap-2">
+                <button
+                  onClick={handleIgnore}
+                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                  Ignore
+                </button>
+                <button
+                  onClick={handleAccept}
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-full flex items-center justify-center gap-1 transition-colors"
+                >
+                  <Heart className="w-5 h-5" fill="currentColor" />
+                  Accept Swap
+                </button>
+              </div>
+
+              {/* Secondary Actions */}
+              <div className="flex gap-3">
+                <button
+                  onClick={handleViewListing}
+                  className="flex-1 border-2 border-gray-300 hover:border-gray-400 text-gray-900 font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-colors"
+                >
+                  <ExternalLink className="w-5 h-5" />
+                  View Full Listing
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Action Buttons - Fixed at Bottom */}
-        <div className="bg-white border-t border-neutral-200 p-4 space-y-3">
-          {/* Primary Actions */}
-          <div className="flex gap-3">
-            <button
-              onClick={handleIgnore}
-              className="flex-1 bg-neutral-200 hover:bg-neutral-300 text-neutral-900 font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-colors"
-            >
-              <X className="w-5 h-5" />
-              Ignore
+        {/* Bottom Navigation */}
+        <div className="absolute bottom-0 left-0 right-0 max-w-sm mx-auto bg-white border-t border-gray-200 rounded-b-lg">
+          <div className="flex justify-around items-center px-4 py-2">
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <div className="w-6 h-6 mb-1 flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
+                  <path d="M16 3l5 5-5 5M21 8H9"/>
+                  <path d="M8 21l-5-5 5-5M3 16h12"/>
+                </svg>
+              </div>
+              <span className="text-xs text-gray-500">Swap</span>
             </button>
-            <button
-              onClick={handleAccept}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-colors"
-            >
-              <Heart className="w-5 h-5" fill="currentColor" />
-              Accept Swap
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <Heart className="w-6 h-6 mb-1 text-gray-400" fill="none" />
+              <span className="text-xs text-gray-500">Likes</span>
             </button>
-          </div>
-
-          {/* Secondary Actions */}
-          <div className="flex gap-3">
-            <button
-              onClick={handleViewListing}
-              className="flex-1 border-2 border-neutral-300 hover:border-neutral-400 text-neutral-900 font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-colors"
-            >
-              <ExternalLink className="w-5 h-5" />
-              View Full Listing
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <Users className="w-6 h-6 mb-1 text-gray-400" />
+              <span className="text-xs text-gray-500">Matches</span>
+            </button>
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <div className="w-6 h-6 mb-1 flex items-center justify-center">
+                <div className="w-5 h-5 rounded-full bg-gray-400"></div>
+              </div>
+              <span className="text-xs text-gray-500">Profile</span>
             </button>
           </div>
-          
-          <Footer/>
         </div>
       </div>
     </div>
