@@ -1,237 +1,463 @@
 import React, { useState } from 'react';
-import { Heart, X, MessageCircle, ExternalLink, MapPin, Tag } from 'lucide-react';
+import { Upload, X, Heart, Users } from 'lucide-react';
 
-// Footer Components
-const FooterButton = ({title}) => {
-  return (
-    <button className="px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors">
-      {title}
-    </button>
-  );
+const categories = {
+  'Tops': ['T-Shirts', 'Tank Tops', 'Blouses', 'Sweaters', 'Hoodies', 'Crop Tops'],
+  'Bottoms': ['Jeans', 'Pants', 'Shorts', 'Skirts', 'Leggings'],
+  'Dresses': ['Mini Dresses', 'Midi Dresses', 'Maxi Dresses', 'Cocktail Dresses'],
+  'Outerwear': ['Jackets', 'Coats', 'Blazers', 'Vests'],
+  'Shoes': ['Sneakers', 'Boots', 'Heels', 'Flats', 'Sandals'],
+  'Accessories': ['Bags', 'Jewelry', 'Hats', 'Scarves', 'Belts', 'Sunglasses']
 };
 
-const Footer = () => {
-  return (
-    <div className="flex flex-row gap-1.5 items-center justify-center bg-white border-t border-neutral-200 py-2">
-        <FooterButton title={"Home"} />
-        <FooterButton title={"Likes"} />
-        <FooterButton title={"Matches"} />
-        <FooterButton title={"Profile"} />
-    </div>
-  );
+const sizeOptions = {
+  'Alpha': ['XXXS', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL'],
+  'Numerical': ['000', '00', '0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20'],
+  'US Shoe': ['4', '4.5', '5', '5.5', '6', '6.5', '7', '7.5', '8', '8.5', '9', '9.5', '10', '10.5', '11', '11.5', '12']
 };
 
-const LikesScreen = () => {
-  const [likes] = useState([
-    {
-      id: 1,
-      coverImage: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&h=300&fit=crop',
-      profileImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
-      title: 'Brandy Melville Waldo Sweater',
-      size: 'XS, XXS',
-      brand: 'Brandy Melville',
-      condition: 'Used, Like New',
-      colors: ['Red', 'White'],
-      categories: ['Shirt', 'T-Shirt', 'Officewear'],
-      status: 'Active',
-      details: "Only worn once, getting rid of as I'm WFH",
-      lookingFor: 'sweats, hoodies',
-      location: 'Vancouver',
-      userName: 'Sarah M.',
-    },
-    {
-      id: 2,
-      coverImage: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=300&fit=crop',
-      profileImage: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
-      title: 'Vintage Levi\'s Denim Jacket',
-      size: 'M',
-      brand: 'Levi\'s',
-      condition: 'Used, Good',
-      colors: ['Blue'],
-      categories: ['Jacket', 'Denim', 'Casual'],
-      status: 'Pending',
-      details: 'Classic vintage fit, some distressing adds character',
-      lookingFor: 'leather jackets, blazers',
-      location: 'Vancouver',
-      userName: 'Alex T.',
+const conditions = ['New with Tags', 'New', 'Like New', 'Fair'];
+
+const colors = ['Black', 'White', 'Gray', 'Beige', 'Brown', 'Red', 'Pink', 'Orange', 'Yellow', 'Green', 'Blue', 'Purple', 'Multi-Color', 'Metallic', 'Other'];
+
+const styleTags = ['Casual', 'Formal', 'Business', 'Boho', 'Vintage', 'Streetwear', 'Athleisure', 'Y2K', 'Minimalist', 'Preppy', 'Grunge', 'Cottagecore'];
+
+export default function ListingForm() {
+  const [formData, setFormData] = useState({
+    listingName: '',
+    category: '',
+    subcategory: '',
+    gender: '',
+    sizeType: '',
+    size: '',
+    brand: '',
+    condition: '',
+    colors: [],
+    styleTags: [],
+    description: '',
+    tradePreferences: '',
+    images: []
+  });
+
+  const [imagePreview, setImagePreview] = useState([]);
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value,
+      ...(field === 'category' && { subcategory: '' }),
+      ...(field === 'sizeType' && { size: '' })
+    }));
+  };
+
+  const handleMultiSelect = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: prev[field].includes(value)
+        ? prev[field].filter(item => item !== value)
+        : [...prev[field], value]
+    }));
+  };
+
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+    if (imagePreview.length + files.length > 3) {
+      alert('Maximum 3 images allowed');
+      return;
     }
-  ]);
 
-  const [currentLikeIndex, setCurrentLikeIndex] = useState(0);
-  const currentLike = likes[currentLikeIndex];
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(prev => [...prev, reader.result]);
+        setFormData(prev => ({
+          ...prev,
+          images: [...prev.images, file]
+        }));
+      };
+      reader.readAsDataURL(file);
+    });
+  };
 
-  const handleAccept = () => {
-    alert(`Starting conversation with ${currentLike.userName}!`);
-    // Move to next like
-    if (currentLikeIndex < likes.length - 1) {
-      setCurrentLikeIndex(currentLikeIndex + 1);
+  const removeImage = (index) => {
+    setImagePreview(prev => prev.filter((_, i) => i !== index));
+    setFormData(prev => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.listingName || !formData.category || !formData.subcategory || 
+        !formData.gender || !formData.size || !formData.brand || 
+        !formData.condition || formData.images.length === 0) {
+      alert('Please fill in all required fields and upload at least one image');
+      return;
     }
-  };
 
-  const handleIgnore = () => {
-    // Move to next like
-    if (currentLikeIndex < likes.length - 1) {
-      setCurrentLikeIndex(currentLikeIndex + 1);
-    } else {
-      alert('No more likes to review!');
-    }
-  };
+    const listingID = `listing_${Date.now()}`;
+    
+    const listing = {
+      ...formData,
+      listingID,
+      listingStatus: 'active',
+      location: 'Vancouver, BC',
+      createdAt: new Date().toISOString()
+    };
 
-  const handleMessage = () => {
-    alert(`Opening chat with ${currentLike.userName}`);
+    console.log('Listing created:', listing);
+    alert('Listing created successfully!');
+    
+    setFormData({
+      listingName: '',
+      category: '',
+      subcategory: '',
+      gender: '',
+      sizeType: '',
+      size: '',
+      brand: '',
+      condition: '',
+      colors: [],
+      styleTags: [],
+      description: '',
+      tradePreferences: '',
+      images: []
+    });
+    setImagePreview([]);
   };
-
-  const handleViewListing = () => {
-    alert('Opening full listing details');
-  };
-
-  if (!currentLike) {
-    return (
-      <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
-        <div className="w-full h-full max-w-sm bg-white flex flex-col items-center justify-center p-4">
-          <Heart className="w-16 h-16 text-neutral-300 mb-4" />
-          <p className="text-neutral-600 text-lg font-medium">No likes yet</p>
-          <p className="text-neutral-400 text-sm mt-2">Check back later!</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-screen bg-neutral-900">
-      <div className="w-full h-full max-w-sm bg-white flex flex-col">
+    <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
+      <div className="w-full h-full max-w-sm bg-white flex flex-col rounded-lg shadow-lg">
         {/* Header */}
-        <div className="bg-white px-4 py-3 border-b border-neutral-200">
-          <h1 className="text-xl font-bold text-neutral-900">Likes</h1>
-          <p className="text-sm text-neutral-500">{likes.length} people interested</p>
+        <div className="px-6 pt-6 pb-4 border-b border-gray-200">
+          <h1 className="text-2xl font-bold text-gray-900">Add Listing</h1>
+          <p className="text-sm text-gray-500 mt-1">Create a new item to swap</p>
         </div>
 
-        {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto">
-          {/* Cover Image with Profile Picture */}
-          <div className="relative">
-            <img 
-              src={currentLike.coverImage} 
-              alt={currentLike.title}
-              className="w-full h-64 object-cover"
-            />
-            <div className="absolute top-3 right-3">
-              <img 
-                src={currentLike.profileImage} 
-                alt={currentLike.userName}
-                className="w-16 h-16 rounded-full border-2 border-white shadow-lg object-cover"
+        {/* Scrollable Form Content */}
+        <div className="flex-1 overflow-y-auto px-6 py-6 pb-24">
+          <div className="space-y-6">
+            {/* Photos */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-3">
+                Photos <span className="text-gray-900">*</span> <span className="font-normal text-gray-500">(up to 3)</span>
+              </label>
+              <div className="flex gap-3">
+                {imagePreview.map((img, index) => (
+                  <div key={index} className="relative w-24 h-24 rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
+                    <img src={img} alt={`Preview ${index + 1}`} className="w-full h-full object-cover" />
+                    <button
+                      onClick={() => removeImage(index)}
+                      className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1"
+                    >
+                      <X size={12} />
+                    </button>
+                  </div>
+                ))}
+                {imagePreview.length < 3 && (
+                  <label className="w-24 h-24 rounded-lg border-2 border-dashed border-gray-300 cursor-pointer flex flex-col items-center justify-center bg-white">
+                    <Upload size={20} className="text-gray-400 mb-1" />
+                    <span className="text-xs text-gray-500">Upload</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      multiple
+                    />
+                  </label>
+                )}
+              </div>
+            </div>
+
+            {/* Listing Name */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Listing Name <span className="text-gray-900">*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.listingName}
+                onChange={(e) => handleInputChange('listingName', e.target.value)}
+                placeholder="e.g., Brandy Melville Waldo Sweater"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200"
               />
             </div>
-          </div>
 
-          {/* Item Details */}
-          <div className="p-4 space-y-4">
-            {/* Title and Status */}
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <h2 className="text-xl font-bold text-neutral-900">{currentLike.title}</h2>
-                <p className="text-sm text-neutral-600 mt-1">{currentLike.size} | Woman | {currentLike.location}</p>
+            {/* Category */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Category <span className="text-gray-900">*</span>
+              </label>
+              <div className="relative">
+                <select
+                  value={formData.category}
+                  onChange={(e) => handleInputChange('category', e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
+                >
+                  <option value="">Select category</option>
+                  {Object.keys(categories).map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                    <path d="M1 1L6 6L11 1" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
               </div>
-              <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                currentLike.status === 'Active' 
-                  ? 'bg-green-100 text-green-800' 
-                  : 'bg-yellow-100 text-yellow-800'
-              }`}>
-                {currentLike.status}
-              </span>
             </div>
 
-            {/* Brand and Condition */}
-            <div className="space-y-2">
-              <div className="flex items-center text-sm text-neutral-600">
-                <Tag className="w-4 h-4 mr-2" />
-                {currentLike.brand}
+            {/* Subcategory */}
+            {formData.category && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  Subcategory <span className="text-gray-900">*</span>
+                </label>
+                <div className="relative">
+                  <select
+                    value={formData.subcategory}
+                    onChange={(e) => handleInputChange('subcategory', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
+                  >
+                    <option value="">Select subcategory</option>
+                    {categories[formData.category].map(subcat => (
+                      <option key={subcat} value={subcat}>{subcat}</option>
+                    ))}
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
-              <div className="flex items-center text-sm text-neutral-600">
-                <span className="mr-2">📦</span>
-                {currentLike.condition}
+            )}
+
+            {/* Gender */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Gender <span className="text-gray-900">*</span>
+              </label>
+              <div className="relative">
+                <select
+                  value={formData.gender}
+                  onChange={(e) => handleInputChange('gender', e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
+                >
+                  <option value="">Select gender</option>
+                  <option value="Women">Women</option>
+                  <option value="Men">Men</option>
+                  <option value="Unisex">Unisex</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                    <path d="M1 1L6 6L11 1" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
               </div>
-              <div className="flex items-center text-sm text-neutral-600">
-                <MapPin className="w-4 h-4 mr-2" />
-                {currentLike.location}
+            </div>
+
+            {/* Sizing Type */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Sizing Type <span className="text-gray-900">*</span>
+              </label>
+              <div className="relative">
+                <select
+                  value={formData.sizeType}
+                  onChange={(e) => handleInputChange('sizeType', e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
+                >
+                  <option value="">Select sizing type</option>
+                  <option value="Alpha">Alpha (XS, S, M, L, XL)</option>
+                  <option value="Numerical">Numerical (0, 2, 4, 6...)</option>
+                  <option value="Shoe">Shoe Sizes</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                    <path d="M1 1L6 6L11 1" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Size */}
+            {formData.sizeType && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  Size <span className="text-gray-900">*</span>
+                </label>
+                <div className="relative">
+                  <select
+                    value={formData.size}
+                    onChange={(e) => handleInputChange('size', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
+                  >
+                    <option value="">Select size</option>
+                    {sizeOptions[formData.sizeType].map(size => (
+                      <option key={size} value={size}>{size}</option>
+                    ))}
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                      <path d="M1 1L6 6L11 1" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Brand */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Brand <span className="text-gray-900">*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.brand}
+                onChange={(e) => handleInputChange('brand', e.target.value)}
+                placeholder="e.g., Zara, H&M, Nike"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200"
+              />
+            </div>
+
+            {/* Condition */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Condition <span className="text-gray-900">*</span>
+              </label>
+              <div className="relative">
+                <select
+                  value={formData.condition}
+                  onChange={(e) => handleInputChange('condition', e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-gray-200"
+                >
+                  <option value="">Select condition</option>
+                  {conditions.map(cond => (
+                    <option key={cond} value={cond}>{cond}</option>
+                  ))}
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+                    <path d="M1 1L6 6L11 1" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                </div>
               </div>
             </div>
 
             {/* Colors */}
-            <div className="flex items-center gap-2">
-              {currentLike.colors.map((color, idx) => (
-                <span 
-                  key={idx}
-                  className="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-xs font-medium"
-                >
-                  {color}
-                </span>
-              ))}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Colors <span className="font-normal text-gray-500">(Select all that apply)</span>
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {colors.map(color => (
+                  <button
+                    key={color}
+                    onClick={() => handleMultiSelect('colors', color)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                      formData.colors.includes(color)
+                        ? 'bg-gray-900 text-white'
+                        : 'bg-gray-100 text-gray-700'
+                    }`}
+                  >
+                    {color}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Categories */}
-            <div className="flex flex-wrap gap-2">
-              {currentLike.categories.map((category, idx) => (
-                <span 
-                  key={idx}
-                  className="px-3 py-1 bg-neutral-200 text-neutral-800 rounded-full text-xs font-medium"
-                >
-                  {category}
-                </span>
-              ))}
+            {/* Style Tags */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Style Tags <span className="font-normal text-gray-500">(Select all that apply)</span>
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {styleTags.map(tag => (
+                  <button
+                    key={tag}
+                    onClick={() => handleMultiSelect('styleTags', tag)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                      formData.styleTags.includes(tag)
+                        ? 'bg-gray-900 text-white'
+                        : 'bg-gray-100 text-gray-700'
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Details */}
-            <div className="bg-neutral-50 rounded-lg p-3">
-              <h3 className="font-semibold text-neutral-900 text-sm mb-2">Details</h3>
-              <p className="text-sm text-neutral-700">{currentLike.details}</p>
+            {/* Description */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Description <span className="font-normal text-gray-500">(Optional)</span>
+              </label>
+              <textarea
+                value={formData.description}
+                onChange={(e) => handleInputChange('description', e.target.value)}
+                placeholder="Tell us more about this item..."
+                rows={4}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200 resize-none"
+              />
             </div>
 
-            {/* Looking For */}
-            <div className="bg-blue-50 rounded-lg p-3">
-              <h3 className="font-semibold text-neutral-900 text-sm mb-2">Looking for</h3>
-              <p className="text-sm text-neutral-700">{currentLike.lookingFor}</p>
-              <p className="text-xs text-neutral-500 mt-1 italic">Open to shoes size 6!</p>
+            {/* Trade Preferences */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-900 mb-2">
+                Trade Preferences <span className="font-normal text-gray-500">(Optional)</span>
+              </label>
+              <textarea
+                value={formData.tradePreferences}
+                onChange={(e) => handleInputChange('tradePreferences', e.target.value)}
+                placeholder="What are you looking to trade for?"
+                rows={3}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200 resize-none"
+              />
             </div>
+
+            {/* Submit Button */}
+            <button
+              onClick={handleSubmit}
+              className="w-full bg-gray-900 text-white font-semibold py-3.5 rounded-full text-sm hover:bg-gray-800 transition-colors"
+            >
+              Create Listing
+            </button>
           </div>
         </div>
 
-        {/* Action Buttons - Fixed at Bottom */}
-        <div className="bg-white border-t border-neutral-200 p-4 space-y-3">
-          {/* Primary Actions */}
-          <div className="flex gap-3">
-            <button
-              onClick={handleIgnore}
-              className="flex-1 bg-neutral-200 hover:bg-neutral-300 text-neutral-900 font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-colors"
-            >
-              <X className="w-5 h-5" />
-              Ignore
+        {/* Bottom Navigation */}
+        <div className="absolute bottom-0 left-0 right-0 max-w-sm mx-auto bg-white border-t border-gray-200 rounded-b-lg">
+          <div className="flex justify-around items-center px-4 py-2">
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <div className="w-6 h-6 mb-1 flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
+                  <path d="M16 3l5 5-5 5M21 8H9"/>
+                  <path d="M8 21l-5-5 5-5M3 16h12"/>
+                </svg>
+              </div>
+              <span className="text-xs text-gray-500">Swap</span>
             </button>
-            <button
-              onClick={handleAccept}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-colors"
-            >
-              <Heart className="w-5 h-5" fill="currentColor" />
-              Accept Swap
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <Heart className="w-6 h-6 mb-1 text-gray-400" fill="none" />
+              <span className="text-xs text-gray-500">Likes</span>
             </button>
-          </div>
-
-          {/* Secondary Actions */}
-          <div className="flex gap-3">
-            <button
-              onClick={handleViewListing}
-              className="flex-1 border-2 border-neutral-300 hover:border-neutral-400 text-neutral-900 font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-colors"
-            >
-              <ExternalLink className="w-5 h-5" />
-              View Full Listing
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <Users className="w-6 h-6 mb-1 text-gray-400" />
+              <span className="text-xs text-gray-500">Matches</span>
+            </button>
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <div className="w-6 h-6 mb-1 flex items-center justify-center">
+                <div className="w-5 h-5 rounded-full bg-gray-400"></div>
+              </div>
+              <span className="text-xs text-gray-500">Profile</span>
             </button>
           </div>
-          
-          <Footer/>
         </div>
       </div>
     </div>
   );
-};
-
-export default LikesScreen;
+}
