@@ -180,7 +180,7 @@ export default function ListingForm() {
                 type="text"
                 value={formData.listingName}
                 onChange={(e) => handleInputChange('listingName', e.target.value)}
-                placeholder="e.g., Brandy Melville Waldo Sweater"
+                placeholder="e.g., Aritzia Peggy Sweater"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-200"
               />
             </div>
@@ -422,7 +422,7 @@ export default function ListingForm() {
             {/* Submit Button */}
             <button
               onClick={handleSubmit}
-              className="w-full bg-gray-900 text-white font-semibold py-3.5 rounded-full text-sm hover:bg-gray-800 transition-colors"
+              className="w-full bg-green-600 text-white font-semibold py-3.5 rounded-full text-sm hover:bg-gray-800 transition-colors"
             >
               Create Listing
             </button>
