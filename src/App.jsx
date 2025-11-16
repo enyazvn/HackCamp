@@ -11,6 +11,7 @@ import LoginPage from './LoginPage';
 import RegisterPage from './RegistrationPage';
 import AddListingPage from './AddListingPage';
 import ProfilePage from './ProfilePage';
+import FeedPage from './FeedPage';
 
 // --- The main App Component where routing is defined ---
 function App() {
@@ -31,24 +32,8 @@ function App() {
       {/* Profile page */}
       <Route path="/profile" element={<ProfilePage />} />
       
-      {/* Placeholder for Feed page */}
-      <Route path="/feed" element={
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column',
-          alignItems: 'center', 
-          justifyContent: 'center',
-          minHeight: '100vh',
-          textAlign: 'center',
-          padding: '20px'
-        }}>
-          <h1 style={{ fontSize: '36px', marginBottom: '20px' }}>Feed Page</h1>
-          <p style={{ marginBottom: '20px' }}>Coming Soon!</p>
-          <a href="/add-listing" style={{ color: '#FF6666', textDecoration: 'none', fontWeight: 'bold' }}>
-            Add a Listing
-          </a>
-        </div>
-      } />
+      {/* Feed page */}
+      <Route path="/feed" element={<FeedPage />} />
       
       {/* 404 page - catch all other routes */}
       <Route path="*" element={

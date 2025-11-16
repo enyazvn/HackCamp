@@ -25,7 +25,7 @@ const Footer = ({ activePage, onNavigate }) => {
       <FooterButton 
         title="Home" 
         active={activePage === 'home'}
-        onClick={() => onNavigate('feed')}
+        onClick={() => onNavigate('home')}
       />
       <FooterButton 
         title="Likes" 
@@ -85,7 +85,11 @@ const ProfilePage = () => {
   const handleNavigate = (page) => {
     setActivePage(page);
     if (page === 'profile') {
-      window.location.href = '/profile';
+      // Already on profile, just refresh
+      window.location.reload();
+    } else if (page === 'home') {
+      // Navigate to feed
+      window.location.href = '/feed';
     } else {
       alert(`${page} page coming soon! Staying on profile.`);
     }
@@ -146,7 +150,7 @@ const ProfilePage = () => {
     <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
       <div className="w-full h-full max-w-sm bg-white flex flex-col rounded-lg shadow-lg relative">
         <div className="bg-white px-4 py-3 border-b border-neutral-200 rounded-t-lg flex items-center justify-between">
-          <button onClick={() => window.history.back()} className="p-1">
+          <button onClick={() => window.location.href = '/feed'} className="p-1">
             <ChevronLeft className="w-6 h-6 text-neutral-900" />
           </button>
           <button className="p-1">
