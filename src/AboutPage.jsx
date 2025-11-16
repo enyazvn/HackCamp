@@ -1,26 +1,21 @@
 import React, { useState } from 'react';
+import { Heart } from 'lucide-react';
 
-// Define the URL of your backend API
 const REGISTER_URL = 'http://localhost:3000/api/register';
 
 const AboutPage = () => {
-  // 1. Set up state to manage all form fields
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     firstname: '',
-    birthday: '', // YYYY-MM-DD format
+    birthday: '',
     preferredMeetingLocation: '',
   });
 
-  // State for handling loading, success, and error messages
-  const [status, setStatus] = useState({ 
-    message: '', 
-    isSuccess: false 
-  });
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [status, setStatus] = useState({ message: '', isSuccess: false });
   const [isLoading, setIsLoading] = useState(false);
 
-  // 2. Handle input changes and update state
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
@@ -29,16 +24,38 @@ const AboutPage = () => {
     }));
   };
 
-  // 3. Handle form submission and API call
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    // Validation
+    if (!formData.firstname || !formData.email || !formData.password) {
+      setStatus({ 
+        message: 'Please fill in all required fields.', 
+        isSuccess: false 
+      });
+      return;
+    }
+
+    if (!termsAccepted) {
+      setStatus({ 
+        message: 'Please accept the terms and conditions.', 
+        isSuccess: false 
+      });
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setStatus({ 
+        message: 'Password must be at least 8 characters.', 
+        isSuccess: false 
+      });
+      return;
+    }
+
     setIsLoading(true);
     setStatus({ message: '', isSuccess: false });
 
-    // Ensure birthday is null if empty, as an empty string might fail backend date validation
     const submissionData = {
-        ...formData,
-        birthday: formData.birthday || null // Send null if optional field is empty
+      ...formData,
+      birthday: formData.birthday || null
     };
 
     try {
@@ -47,31 +64,29 @@ const AboutPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        // Convert the JavaScript object to a JSON string for the body
         body: JSON.stringify(submissionData),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // HTTP Status 201 (Created)
         setStatus({ 
-          message: `Success! User registered with ID: ${data.userId}.`, 
+          message: `Welcome to Renewd, ${formData.firstname}! 🎉`, 
           isSuccess: true 
         });
-        // Optionally clear the form: setFormData({ ...initialState });
+        setTimeout(() => {
+          window.location.href = '/add-listing';
+        }, 2000);
       } else {
-        // HTTP Status 400, 409, 500, etc.
-        // The backend sends error/message fields for these cases
         setStatus({ 
-          message: `Registration failed: ${data.message || data.details || 'Unknown error'}`, 
+          message: data.message || data.details || 'Registration failed. Please try again.', 
           isSuccess: false 
         });
       }
     } catch (error) {
-      console.error('Network or fetch error:', error);
+      console.error('Network error:', error);
       setStatus({ 
-        message: 'Network error. Could not reach the server.', 
+        message: 'Could not connect to server. Please check your connection.', 
         isSuccess: false 
       });
     } finally {
@@ -80,134 +95,165 @@ const AboutPage = () => {
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
-      <h1>👤 New User Registration</h1>
-      <p>Please provide your details below.</p>
-      
-      {/* Display Status Message */}
-      {status.message && (
-        <div style={{ 
-          padding: '10px', 
-          marginBottom: '15px', 
-          borderRadius: '5px',
-          backgroundColor: status.isSuccess ? '#d4edda' : '#f8d7da',
-          color: status.isSuccess ? '#155724' : '#721c24'
-        }}>
-          {status.message}
-        </div>
-      )}
-
-      {/* Registration Form */}
-      <form onSubmit={handleSubmit}>
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-md">
         
-        {/* Email Field (Required) */}
-        <div className="form-group">
-          <label htmlFor="email">Email Address (Required)</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            disabled={isLoading}
-            style={inputStyle}
-          />
-        </div>
-        
-        {/* Password Field (Required) */}
-        <div className="form-group">
-          <label htmlFor="password">Password (Min 8 Chars, Required)</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            disabled={isLoading}
-            minLength="8"
-            style={inputStyle}
-          />
-        </div>
-        
-        {/* First Name Field (Required) */}
-        <div className="form-group">
-          <label htmlFor="firstname">First Name (Required)</label>
-          <input
-            type="text"
-            id="firstname"
-            name="firstname"
-            value={formData.firstname}
-            onChange={handleChange}
-            required
-            disabled={isLoading}
-            style={inputStyle}
-          />
-        </div>
-        
-        {/* Birthday Field (Optional) */}
-        <div className="form-group">
-          <label htmlFor="birthday">Birthday (YYYY-MM-DD)</label>
-          <input
-            type="date" // Uses the browser's date picker if supported
-            id="birthday"
-            name="birthday"
-            value={formData.birthday}
-            onChange={handleChange}
-            disabled={isLoading}
-            pattern="\d{4}-\d{2}-\d{2}"
-            style={inputStyle}
-          />
-        </div>
-        
-        {/* Preferred Meeting Location Field (Optional) */}
-        <div className="form-group">
-          <label htmlFor="preferredMeetingLocation">Preferred Meeting Location</label>
-          <input
-            type="text"
-            id="preferredMeetingLocation"
-            name="preferredMeetingLocation"
-            value={formData.preferredMeetingLocation}
-            onChange={handleChange}
-            disabled={isLoading}
-            style={inputStyle}
-          />
+        {/* Header with Logo */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-pink-500 rounded-full mb-4">
+            <Heart className="w-8 h-8 text-white" fill="currentColor" />
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to Renewd</h1>
+          <p className="text-gray-600 text-sm">Swap sustainable, live local</p>
         </div>
 
-        {/* Submit Button */}
-        <button 
-          type="submit" 
-          disabled={isLoading} 
-          style={buttonStyle}>
-          {isLoading ? 'Registering...' : 'Register'}
-        </button>
-      </form>
+        {/* Status Message */}
+        {status.message && (
+          <div className={`mb-6 p-4 rounded-lg text-sm font-medium ${
+            status.isSuccess 
+              ? 'bg-green-50 text-green-800 border border-green-200' 
+              : 'bg-red-50 text-red-800 border border-red-200'
+          }`}>
+            {status.message}
+          </div>
+        )}
+
+        {/* Registration Form */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 space-y-5">
+          
+          {/* First Name */}
+          <div>
+            <label htmlFor="firstname" className="block text-sm font-medium text-gray-700 mb-2">
+              What's your first name? *
+            </label>
+            <input
+              type="text"
+              id="firstname"
+              name="firstname"
+              placeholder="Enter your first name"
+              value={formData.firstname}
+              onChange={handleChange}
+              disabled={isLoading}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              Email address *
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              value={formData.email}
+              onChange={handleChange}
+              disabled={isLoading}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              Create a password *
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="At least 8 characters"
+              value={formData.password}
+              onChange={handleChange}
+              disabled={isLoading}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+            />
+            <p className="mt-1 text-xs text-gray-500">Must be at least 8 characters</p>
+          </div>
+
+          {/* Birthday */}
+          <div>
+            <label htmlFor="birthday" className="block text-sm font-medium text-gray-700 mb-2">
+              Birthday <span className="text-gray-400 font-normal">(optional)</span>
+            </label>
+            <input
+              type="date"
+              id="birthday"
+              name="birthday"
+              value={formData.birthday}
+              onChange={handleChange}
+              disabled={isLoading}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+            />
+          </div>
+
+          {/* Preferred Meeting Location */}
+          <div>
+            <label htmlFor="preferredMeetingLocation" className="block text-sm font-medium text-gray-700 mb-2">
+              Preferred meeting location
+            </label>
+            <input
+              type="text"
+              id="preferredMeetingLocation"
+              name="preferredMeetingLocation"
+              placeholder="e.g., Downtown Toronto, Queen St W"
+              value={formData.preferredMeetingLocation}
+              onChange={handleChange}
+              disabled={isLoading}
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all disabled:bg-gray-50 disabled:cursor-not-allowed"
+            />
+            <p className="mt-1 text-xs text-gray-500">Where do you prefer to swap items?</p>
+          </div>
+
+          {/* Terms Checkbox */}
+          <div className="flex items-start">
+            <input 
+              type="checkbox" 
+              id="terms" 
+              checked={termsAccepted}
+              onChange={(e) => setTermsAccepted(e.target.checked)}
+              disabled={isLoading}
+              className="mt-1 h-4 w-4 text-pink-500 border-gray-300 rounded focus:ring-pink-500"
+            />
+            <label htmlFor="terms" className="ml-2 text-xs text-gray-600">
+              I agree to the <span className="text-pink-500 font-medium">Terms of Service</span> and <span className="text-pink-500 font-medium">Privacy Policy</span>
+            </label>
+          </div>
+
+          {/* Submit Button */}
+          <button 
+            onClick={handleSubmit}
+            disabled={isLoading} 
+            className="w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-4 px-6 rounded-xl transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+          >
+            {isLoading ? (
+              <span className="flex items-center justify-center">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Creating your account...
+              </span>
+            ) : (
+              'Start Swapping'
+            )}
+          </button>
+        </div>
+
+        {/* Sign In Link */}
+        <div className="text-center mt-6">
+          <p className="text-sm text-gray-600">
+            Already have an account?{' '}
+            <a href="/login" className="text-pink-500 font-semibold hover:text-pink-600 transition-colors">
+              Sign In
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
   );
-};
-
-// Simple inline styles for demonstration purposes
-const inputStyle = {
-  width: '100%',
-  padding: '8px',
-  margin: '8px 0 15px 0',
-  display: 'inline-block',
-  border: '1px solid #ccc',
-  borderRadius: '4px',
-  boxSizing: 'border-box'
-};
-
-const buttonStyle = {
-  width: '100%',
-  backgroundColor: '#4CAF50',
-  color: 'white',
-  padding: '14px 20px',
-  margin: '8px 0',
-  border: 'none',
-  borderRadius: '4px',
-  cursor: 'pointer',
-  fontSize: '16px'
 };
 
 export default AboutPage;
