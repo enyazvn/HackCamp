@@ -56,8 +56,8 @@ const LoginPage = () => {
         });
         
         setTimeout(() => {
-          // Redirect to main feed/home page
-          window.location.href = '/feed';
+          // Redirect to add listing page
+          window.location.href = '/add-listing';
         }, 1500);
       } else {
         setStatus({ 

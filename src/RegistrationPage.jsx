@@ -71,11 +71,11 @@ const RegisterPage = () => {
 
       if (response.ok) {
         setStatus({ 
-          message: `Welcome to Renewd, ${formData.firstname}! 🎉`, 
+          message: `Welcome to Renewd, ${formData.firstname}! 🎉 Redirecting to login...`, 
           isSuccess: true 
         });
         setTimeout(() => {
-          window.location.href = '/add-listing';
+          window.location.href = '/login';
         }, 2000);
       } else {
         setStatus({ 
