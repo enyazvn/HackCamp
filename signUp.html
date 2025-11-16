@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Mobile App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app-container">
+        <header>
+            <h1>Mobile App</h1>
+        </header>
+
+        <div id="content">
+            <div class="card">
+                <h2>Welcome</h2>
+                <p>This is a mobile-optimized layout with internal scrolling. The page itself doesn't scroll - only this content area does.</p>
+                <button class="btn" onclick="handleClick('Welcome')">Click Me</button>
+            </div>
+
+            <div class="card">
+                <h2>Card 2</h2>
+                <p>Scroll down to see more content. The header stays fixed at the top and the footer stays at the bottom.</p>
+                <p>This creates a native app-like experience.</p>
+            </div>
+
+            <div class="card">
+                <h2>Card 3</h2>
+                <p>You can add as much content as you need here.</p>
+                <p>The scrolling is smooth and optimized for mobile devices using -webkit-overflow-scrolling: touch.</p>
+            </div>
+
+            <div class="card">
+                <h2>Card 4</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+
+            <div class="card">
+                <h2>Card 5</h2>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+
+            <div class="card">
+                <h2>Card 6</h2>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+
+            <div class="card">
+                <h2>Last Card</h2>
+                <p>You've reached the end of the content!</p>
+                <button class="btn" onclick="scrollToTop()">Scroll to Top</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Mobile App</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
