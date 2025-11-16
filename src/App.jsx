@@ -7,8 +7,11 @@ import './App.css';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 // Import your page components
-import LoginPage from './LoginPage';
-import RegisterPage from './RegistrationPage';
+// 1. LANDING PAGE (WelcomePage) - Renamed the import alias for clarity
+import WelcomePage from './SignInLogInLanding'; 
+// 2. LOGIN PAGE (The actual sign-in form) - Update the file path to match your structure
+import LoginPage from './NEWLoginPage'; 
+import RegisterPage from './NEWRegistrationPage';
 import AddListingPage from './AddListingPage';
 import ProfilePage from './ProfilePage';
 
@@ -16,11 +19,11 @@ import ProfilePage from './ProfilePage';
 function App() {
   return (
     <Routes>
-      {/* Default route - Login Page */}
-      <Route path="/" element={<LoginPage />} />
+      {/* Default route - WELCOME/LANDING Page */}
+      <Route path="/" element={<WelcomePage />} /> 
       
-      {/* Login page (explicit route) */}
-      <Route path="/login" element={<LoginPage />} />
+      {/* Login page (explicit route) - Points to the sign-in form */}
+      <Route path="/login" element={<LoginPage />} /> 
       
       {/* Registration page */}
       <Route path="/register" element={<RegisterPage />} />
@@ -64,7 +67,7 @@ function App() {
           <h1 style={{ fontSize: '48px', marginBottom: '20px' }}>404</h1>
           <p style={{ marginBottom: '20px' }}>Page Not Found</p>
           <a href="/" style={{ color: '#FF6666', textDecoration: 'none', fontWeight: 'bold' }}>
-            Go back to Login
+            Go back to Home
           </a>
         </div>
       } />
