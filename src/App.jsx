@@ -24,16 +24,13 @@ function App() {
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
-      </div>
-      <p className="read-the-docs">
+        <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <p className="my-test-text">
-        hi we can make changes to the project now
-      </p>
-      <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+      </div>
+      <div className="text-3xl font-bold">
+        <h1>Hello Tailwind!</h1>
+      </div>
     </>
   )
 }
