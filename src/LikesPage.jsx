@@ -1,51 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, X, MessageCircle, ExternalLink, MapPin, Tag, Users } from 'lucide-react';
+import Footer from './Footer';
 
 const LIKES_API_URL = 'http://localhost:3000/api/likes/received';
 const UPDATE_LIKE_URL = 'http://localhost:3000/api/likes';
-
-// Footer Components
-const FooterButton = ({ title, active, onClick }) => {
-  return (
-    <button 
-      onClick={onClick}
-      className={`px-4 py-2 text-sm font-medium transition-colors ${
-        active 
-          ? 'text-pink-500 font-bold' 
-          : 'text-neutral-600 hover:text-neutral-900'
-      }`}
-    >
-      {title}
-    </button>
-  );
-};
-
-const Footer = ({ activePage, onNavigate }) => {
-  return (
-    <div className="flex flex-row gap-1.5 items-center justify-center bg-white border-t border-neutral-200 py-2">
-      <FooterButton 
-        title="Home" 
-        active={activePage === 'home'}
-        onClick={() => onNavigate('home')}
-      />
-      <FooterButton 
-        title="Likes" 
-        active={activePage === 'likes'}
-        onClick={() => onNavigate('likes')}
-      />
-      <FooterButton 
-        title="Matches" 
-        active={activePage === 'matches'}
-        onClick={() => onNavigate('matches')}
-      />
-      <FooterButton 
-        title="Profile" 
-        active={activePage === 'profile'}
-        onClick={() => onNavigate('profile')}
-      />
-    </div>
-  );
-};
 
 const LikesPage = () => {
   const [activePage, setActivePage] = useState('likes');
@@ -360,10 +318,7 @@ const LikesPage = () => {
           </div>
         </div>
 
-        {/* Bottom Navigation */}
-        <div className="absolute bottom-0 left-0 right-0 rounded-b-lg overflow-hidden">
-          <Footer activePage={activePage} onNavigate={handleNavigate} />
-        </div>
+        <Footer activePage={activePage} onNavigate={handleNavigate} />
       </div>
     </div>
   );

@@ -1,50 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Settings, ChevronLeft, Plus, LogOut } from 'lucide-react';
+import Footer from './Footer';
 
 const PROFILE_API_URL = 'http://localhost:3000/api/profile';
-
-// Footer Components
-const FooterButton = ({ title, active, onClick }) => {
-  return (
-    <button 
-      onClick={onClick}
-      className={`px-4 py-2 text-sm font-medium transition-colors ${
-        active 
-          ? 'text-pink-500 font-bold' 
-          : 'text-neutral-600 hover:text-neutral-900'
-      }`}
-    >
-      {title}
-    </button>
-  );
-};
-
-const Footer = ({ activePage, onNavigate }) => {
-  return (
-    <div className="flex flex-row gap-1.5 items-center justify-center bg-white border-t border-neutral-200 py-2">
-      <FooterButton 
-        title="Home" 
-        active={activePage === 'home'}
-        onClick={() => onNavigate('home')}
-      />
-      <FooterButton 
-        title="Likes" 
-        active={activePage === 'likes'}
-        onClick={() => onNavigate('likes')}
-      />
-      <FooterButton 
-        title="Matches" 
-        active={activePage === 'matches'}
-        onClick={() => onNavigate('matches')}
-      />
-      <FooterButton 
-        title="Profile" 
-        active={activePage === 'profile'}
-        onClick={() => onNavigate('profile')}
-      />
-    </div>
-  );
-};
 
 const ProfilePage = () => {
   const [activePage, setActivePage] = useState('profile');
@@ -165,21 +123,21 @@ const ProfilePage = () => {
     <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
       <div className="w-full h-full max-w-sm bg-white flex flex-col rounded-lg shadow-lg relative">
         <div className="bg-white px-4 py-3 border-b border-neutral-200 rounded-t-lg flex items-center justify-between">
-          <button onClick={() => window.location.href = '/feed'} className="p-1 hover:bg-gray-100 rounded-lg transition-colors">
-            <ChevronLeft className="w-6 h-6 text-neutral-900" />
+          <button onClick={() => window.location.href = '/feed'} className="p-1">
+            <ChevronLeft className="w-6 h-6 text-neutral-900" strokeWidth={2} />
           </button>
           <h2 className="text-lg font-semibold text-neutral-900">Profile</h2>
           <div className="flex items-center gap-2">
-            <button onClick={handleLogout} className="p-1 hover:bg-gray-100 rounded-lg transition-colors" title="Logout">
-              <LogOut className="w-5 h-5 text-neutral-900" />
+            <button onClick={handleLogout} className="p-1" title="Logout">
+              <LogOut className="w-5 h-5 text-neutral-900" strokeWidth={2} />
             </button>
-            <button className="p-1 hover:bg-gray-100 rounded-lg transition-colors" title="Settings">
-              <Settings className="w-5 h-5 text-neutral-900" />
+            <button className="p-1" title="Settings">
+              <Settings className="w-5 h-5 text-neutral-900" strokeWidth={2} />
             </button>
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto pb-16">
+        <div className="flex-1 overflow-y-auto pb-20">
           <div className="relative">
             <img 
               src={profile.coverImage || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=200&fit=crop'} 
@@ -298,9 +256,7 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 rounded-b-lg overflow-hidden">
-          <Footer activePage={activePage} onNavigate={handleNavigate} />
-        </div>
+        <Footer activePage={activePage} onNavigate={handleNavigate} />
       </div>
     </div>
   );
