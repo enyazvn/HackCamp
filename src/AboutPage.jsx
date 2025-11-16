@@ -1,25 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Settings, ChevronLeft } from 'lucide-react';
-
-// Footer Components
-const FooterButton = ({title}) => {
-  return (
-    <button className="px-4 py-2 text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors">
-      {title}
-    </button>
-  );
-};
-
-const Footer = () => {
-  return (
-    <div className="flex flex-row gap-1.5 items-center justify-center bg-white border-t border-neutral-200 py-2">
-        <FooterButton title={"Home"} />
-        <FooterButton title={"Likes"} />
-        <FooterButton title={"Matches"} />
-        <FooterButton title={"Profile"} />
-    </div>
-  );
-};
+import { MapPin, Settings, ChevronLeft, Heart, Users } from 'lucide-react';
 
 const ProfilePage = () => {
   const [activePage, setActivePage] = useState('profile');
@@ -93,7 +73,7 @@ const ProfilePage = () => {
       case 'Sold':
         return 'bg-red-500';
       default:
-        return 'bg-neutral-500';
+        return 'bg-gray-500';
     }
   };
 
@@ -101,12 +81,12 @@ const ProfilePage = () => {
     <div className="flex items-center justify-center h-screen w-screen bg-neutral-900">
       <div className="w-full h-full max-w-sm bg-white flex flex-col rounded-lg shadow-lg relative">
         {/* Header */}
-        <div className="bg-white px-4 py-3 border-b border-neutral-200 rounded-t-lg flex items-center justify-between">
+        <div className="bg-white px-4 py-3 border-b border-gray-200 rounded-t-lg flex items-center justify-between">
           <button className="p-1">
-            <ChevronLeft className="w-6 h-6 text-neutral-900" />
+            <ChevronLeft className="w-6 h-6 text-gray-900" />
           </button>
           <button className="p-1">
-            <Settings className="w-6 h-6 text-neutral-900" />
+            <Settings className="w-6 h-6 text-gray-900" />
           </button>
         </div>
 
@@ -132,21 +112,21 @@ const ProfilePage = () => {
           <div className="pt-14 px-4 space-y-4">
             {/* Name and Location */}
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-neutral-900">{profile.firstName}</h2>
+              <h2 className="text-2xl font-bold text-gray-900">{profile.firstName}</h2>
               <div className="flex items-center justify-center gap-1 mt-1">
-                <MapPin className="w-4 h-4 text-neutral-600" />
-                <span className="text-sm text-neutral-600">{profile.location}</span>
+                <MapPin className="w-4 h-4 text-gray-600" />
+                <span className="text-sm text-gray-600">{profile.location}</span>
               </div>
             </div>
 
             {/* Sizing */}
             <div>
-              <h3 className="text-sm font-bold text-neutral-900 mb-2">Sizing</h3>
+              <h3 className="text-sm font-semibold text-gray-900 mb-2">Sizing</h3>
               <div className="flex gap-2">
                 {profile.sizing.map((size, idx) => (
                   <span 
                     key={idx}
-                    className="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-xs font-medium"
+                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium"
                   >
                     {size}
                   </span>
@@ -156,12 +136,12 @@ const ProfilePage = () => {
 
             {/* Style */}
             <div>
-              <h3 className="text-sm font-bold text-neutral-900 mb-2">Style</h3>
+              <h3 className="text-sm font-semibold text-gray-900 mb-2">Style</h3>
               <div className="flex gap-2">
                 {profile.style.map((styleTag, idx) => (
                   <span 
                     key={idx}
-                    className="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-xs font-medium"
+                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium"
                   >
                     {styleTag}
                   </span>
@@ -171,14 +151,14 @@ const ProfilePage = () => {
 
             {/* Preferred Meetup */}
             <div>
-              <h3 className="text-sm font-bold text-neutral-900 mb-2">Preferred Meetup</h3>
-              <p className="text-sm text-neutral-700">{profile.preferredMeetup}</p>
+              <h3 className="text-sm font-semibold text-gray-900 mb-2">Preferred Meetup</h3>
+              <p className="text-sm text-gray-700">{profile.preferredMeetup}</p>
             </div>
 
             {/* Bio */}
             <div>
-              <h3 className="text-sm font-bold text-neutral-900 mb-2">Bio</h3>
-              <p className="text-sm text-neutral-700">{profile.bio}</p>
+              <h3 className="text-sm font-semibold text-gray-900 mb-2">Bio</h3>
+              <p className="text-sm text-gray-700">{profile.bio}</p>
             </div>
 
             {/* Listings Grid */}
@@ -206,9 +186,33 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        {/* Footer Navigation - Fixed at Bottom */}
-        <div className="absolute bottom-0 left-0 right-0 rounded-b-lg overflow-hidden">
-          <Footer activePage={activePage} onNavigate={handleNavigate} />
+        {/* Bottom Navigation */}
+        <div className="absolute bottom-0 left-0 right-0 max-w-sm mx-auto bg-white border-t border-gray-200 rounded-b-lg">
+          <div className="flex justify-around items-center px-4 py-2">
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <div className="w-6 h-6 mb-1 flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400">
+                  <path d="M16 3l5 5-5 5M21 8H9"/>
+                  <path d="M8 21l-5-5 5-5M3 16h12"/>
+                </svg>
+              </div>
+              <span className="text-xs text-gray-500">Swap</span>
+            </button>
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <Heart className="w-6 h-6 mb-1 text-gray-400" fill="none" />
+              <span className="text-xs text-gray-500">Likes</span>
+            </button>
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <Users className="w-6 h-6 mb-1 text-gray-400" />
+              <span className="text-xs text-gray-500">Matches</span>
+            </button>
+            <button className="flex flex-col items-center justify-center py-2 min-w-[60px]">
+              <div className="w-6 h-6 mb-1 flex items-center justify-center">
+                <div className="w-5 h-5 rounded-full bg-gray-400"></div>
+              </div>
+              <span className="text-xs text-gray-500">Profile</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
