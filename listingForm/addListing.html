@@ -1,0 +1,138 @@
+<link rel="stylesheet" href="styles.css">
+<script src="script.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Listing</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Create a New Listing</h1>
+
+        <form id="listingForm">
+
+            <!-- Listing Name -->
+            <label for="listingName">Listing Name *</label>
+            <input type="text" id="listingName" name="listingName" placeholder="e.g. Aritzia TNA Hoodie" required>
+
+            <!-- Sizing System -->
+            <label for="sizeSystem">Sizing System *</label>
+            <select id="sizeSystem" name="sizeSystem" required>
+                <option value="">Select sizing system</option>
+                <option value="us">US</option>
+                <option value="uk">UK</option>
+                <option value="eu">EU</option>
+                <option value="universal">Universal (XS–XL)</option>
+            </select>
+
+            <!-- Gender Sizing -->
+            <label for="genderSize">Gender *</label>
+            <select id="genderSize" name="genderSize" required>
+                <option value="">Select gender</option>
+                <option value="women">Women</option>
+                <option value="men">Men</option>
+                <option value="unisex">Unisex</option>
+            </select>
+
+            <!-- Size Dropdown -->
+            <label for="size">Size *</label>
+            <select id="size" name="size" required>
+                <option value="">Select size</option>
+                <!-- Backend should populate based on sizeSystem + gender -->
+            </select>
+
+            <!-- Location (Pulled from user API) -->
+            <label for="location">Location *</label>
+            <input type="text" id="location" name="location" placeholder="Loading your location..." disabled>
+            <!-- Use JS to fill this from API -->
+
+            <!-- Brand -->
+            <label for="brand">Brand *</label>
+            <input type="text" id="brand" name="brand" placeholder="e.g. Aritzia, Nike, Zara" required>
+
+            <!-- Condition -->
+            <label for="condition">Condition *</label>
+            <select id="condition" name="condition" required>
+                <option value="">Select condition</option>
+                <option value="new">New</option>
+                <option value="like-new">Like New</option>
+                <option value="good">Good</option>
+                <option value="fair">Fair</option>
+            </select>
+
+            <!-- Color Dropdown -->
+            <label for="color">Colour *</label>
+            <select id="color" name="color" required>
+                <option value="">Select colour</option>
+                <option value="black">Black</option>
+                <option value="white">White</option>
+                <option value="grey">Grey</option>
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+                <option value="brown">Brown</option>
+                <option value="pink">Pink</option>
+                <option value="purple">Purple</option>
+                <option value="yellow">Yellow</option>
+                <option value="multi">Multi</option>
+            </select>
+
+            <!-- Category -->
+            <label for="category">Category *</label>
+            <select id="category" name="category" required>
+                <option value="">Select category</option>
+                <option value="tops">Tops</option>
+                <option value="bottoms">Bottoms</option>
+                <option value="shoes">Shoes</option>
+                <option value="outerwear">Outerwear</option>
+                <option value="accessories">Accessories</option>
+            </select>
+
+            <!-- Subcategory (filtered based on category) -->
+            <label for="subcategory">Subcategory *</label>
+            <select id="subcategory" name="subcategory" required>
+                <option value="">Select subcategory</option>
+                <!-- JS populates depending on selected category -->
+            </select>
+
+            <!-- Style Tags -->
+            <label for="styleTags">Style Tags *</label>
+            <select id="styleTags" name="styleTags" multiple required>
+                <option value="basics">Basics</option>
+                <option value="athletic">Athletic</option>
+                <option value="streetwear">Streetwear</option>
+                <option value="business">Office / Business</option>
+                <option value="y2k">Y2K</option>
+                <option value="vintage">Vintage</option>
+                <option value="minimalist">Minimalist</option>
+            </select>
+            <small>Select up to 3 tags</small>
+
+            <!-- Description (Optional) -->
+            <label for="description">Description (optional)</label>
+            <textarea id="description" name="description" placeholder="Add any extra details..."></textarea>
+
+            <!-- Trade Preferences -->
+            <label for="tradePreferences">Trade Preferences (optional)</label>
+            <textarea id="tradePreferences" name="tradePreferences" placeholder='e.g. "Looking to trade for size 6 shoes"'></textarea>
+
+            <!-- Image Upload -->
+            <label for="images">Upload Photos (up to 4)</label>
+            <input type="file" id="images" name="images" accept="image/*" multiple>
+
+            <!-- Hidden values for backend -->
+            <input type="hidden" id="listingID" name="listingID">
+            <input type="hidden" id="listingStatus" name="listingStatus" value="active">
+
+            <button type="submit" class="submit-btn">Create Listing</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

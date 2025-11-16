@@ -1,0 +1,158 @@
+/* Mobile App Styling Updated */
+
+body {
+    font-family: Modern Era, sans-serif;
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Phone Frame */
+.phone-frame {
+    width: 390px;
+    min-height: 100vh;
+    background: #ffffff;
+    border-radius: 32px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.15);
+    padding: 20px 22px 40px;
+    position: relative;
+    overflow-y: auto;
+}
+
+/* Header */
+.app-header {
+    font-size: 22px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 24px;
+    padding-top: 8px;
+}
+
+label {
+    font-size: 15px;
+    margin-top: 18px;
+    display: block;
+    font-weight: 500;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 14px;
+    border: 1.5px solid #d2d2d2;
+    font-size: 15px;
+    background: #fafafa;
+}
+
+textarea {
+    height: 90px;
+    resize: none;
+}
+
+/* Dropdown Box */
+.dropdown {
+    width: 100%;
+    padding: 12px;
+    background: #fafafa;
+    border: 1.5px solid #d2d2d2;
+    border-radius: 14px;
+    margin-top: 8px;
+    cursor: pointer;
+    position: relative;
+    font-size: 15px;
+}
+
+.dropdown.open {
+    border-color: #333;
+}
+
+.dropdown .placeholder {
+    color: #999;
+}
+
+/* Menu */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 52px;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border: 1.5px solid #ccc;
+    border-radius: 14px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.dropdown.open .dropdown-menu {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 15px;
+}
+
+.dropdown-item:hover {
+    background-color: #f4f4f4;
+}
+
+/* Chips */
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.chip {
+    background: #eef0f3;
+    padding: 7px 12px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.chip .remove {
+    cursor: pointer;
+    font-weight: 700;
+    color: #555;
+}
+
+/* Image Preview */
+#previewContainer {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+#previewContainer img {
+    width: 80px;
+    height: 80px;
+    border-radius: 14px;
+    object-fit: cover;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #111;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 17px;
+    margin-top: 28px;
+    cursor: pointer;
+    font-weight: 500;
+}
