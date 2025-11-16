@@ -142,6 +142,8 @@ const FeedPage = () => {
       fetchFeedListing();
     } else if (page === 'likes') {
       window.location.href = '/likes';
+    } else if (page === 'matches') {
+      window.location.href = '/matches';
     } else {
       alert(`${page} page coming soon!`);
     }

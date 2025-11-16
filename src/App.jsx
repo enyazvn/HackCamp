@@ -13,6 +13,7 @@ import AddListingPage from './AddListingPage';
 import ProfilePage from './ProfilePage';
 import FeedPage from './FeedPage';
 import LikesPage from './LikesPage';
+import MatchesPage from './MatchesPage';
 
 // --- The main App Component where routing is defined ---
 function App() {
@@ -38,6 +39,9 @@ function App() {
       
       {/* Likes page */}
       <Route path="/likes" element={<LikesPage />} />
+      
+      {/* Matches page */}
+      <Route path="/matches" element={<MatchesPage />} />
       
       {/* 404 page - catch all other routes */}
       <Route path="*" element={

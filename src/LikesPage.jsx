@@ -91,16 +91,15 @@ const LikesPage = () => {
     const currentLike = likes[currentLikeIndex];
     
     try {
-      const response = await fetch(`${UPDATE_LIKE_URL}/${currentLike.id}/status`, {
+      const response = await fetch(`${UPDATE_LIKE_URL}/${currentLike.id}/accept`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: 'accepted' }),
+        }
       });
 
       if (response.ok) {
-        alert(`Starting conversation with ${currentLike.userName}!`);
+        alert(`Match created with ${currentLike.userName}! Check your Matches.`);
         moveToNextLike();
       } else {
         alert('Failed to accept swap. Please try again.');
@@ -115,12 +114,11 @@ const LikesPage = () => {
     const currentLike = likes[currentLikeIndex];
     
     try {
-      const response = await fetch(`${UPDATE_LIKE_URL}/${currentLike.id}/status`, {
+      const response = await fetch(`${UPDATE_LIKE_URL}/${currentLike.id}/ignore`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: 'ignored' }),
+        }
       });
 
       if (response.ok) {
@@ -162,6 +160,8 @@ const LikesPage = () => {
     } else if (page === 'likes') {
       // Already on likes
       fetchLikes();
+    } else if (page === 'matches') {
+      window.location.href = '/matches';
     } else {
       alert(`${page} page coming soon!`);
     }
