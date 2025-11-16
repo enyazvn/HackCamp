@@ -1,13 +1,5 @@
 // ---------- Dropdown Data ---------- //
 const options = {
-    sizeSystem: ["US", "UK", "EU"],
-    sizing: {
-        US: ["000", "00", "0", "2", "4", "6", "8", "10", "12", "14", "XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"],
-        UK: ["4", "6", "8", "10", "12", "14"]
-    },
-    gender: ["Women", "Men", "Unisex"],
-    condition: ["New", "Like New", "Good", "Fair"],
-    colour: ["White", "Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Pink", "Beige", "Brown", "Grey", "Black"],
     category: ["Tops", "Bottoms", "Shoes", "Outerwear", "Accessories"],
     subcategory: {
         Tops: ["T-Shirt", "Tank Top", "Blouse", "Sweater"],
@@ -16,6 +8,15 @@ const options = {
         Outerwear: ["Jacket", "Coat", "Hoodie"],
         Accessories: ["Hat", "Bag", "Belt", "Scarf"]
     },
+    gender: ["Women", "Men", "Unisex"],
+    sizeSystem: ["Alpha", "Numerical", "Shoe"],
+    sizing: {
+        Alpha: ["XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL"],
+        Numerical: ["000", "00", "0", "2", "4", "6", "8", "10", "12", "14"],
+        Shoe: ["Men's 4", "Men's 5", "Men's 6", "Men's 7", "Men's 8", "Men's 9", "Men's 10", "Men's 11", "Men's 12", "Men's 13"]
+    },
+    condition: ["New", "Like New", "Good", "Fair"],
+    colour: ["White", "Red", "Orange", "Yellow", "Green", "Blue", "Purple", "Pink", "Beige", "Brown", "Grey", "Black"],
     styleTags: ["Basics", "Streetwear", "Athletic", "Office", "Y2K", "Minimalist", "Vintage"]
 };
 

@@ -20,14 +20,22 @@
             <label for="listingName">Listing Name *</label>
             <input type="text" id="listingName" name="listingName" placeholder="e.g. Aritzia TNA Hoodie" required>
 
-            <!-- Sizing System -->
-            <label for="sizeSystem">Sizing System *</label>
-            <select id="sizeSystem" name="sizeSystem" required>
-                <option value="">Select sizing system</option>
-                <option value="us">US</option>
-                <option value="uk">UK</option>
-                <option value="eu">EU</option>
-                <option value="universal">Universal (XS–XL)</option>
+           <!-- Category -->
+            <label for="category">Category *</label>
+            <select id="category" name="category" required>
+                <option value="">Select category</option>
+                <option value="tops">Tops</option>
+                <option value="bottoms">Bottoms</option>
+                <option value="shoes">Shoes</option>
+                <option value="outerwear">Outerwear</option>
+                <option value="accessories">Accessories</option>
+            </select>
+
+            <!-- Subcategory (filtered based on category) -->
+            <label for="subcategory">Subcategory *</label>
+            <select id="subcategory" name="subcategory" required>
+                <option value="">Select subcategory</option>
+                <!-- JS populates depending on selected category -->
             </select>
 
             <!-- Gender Sizing -->
@@ -37,6 +45,15 @@
                 <option value="women">Women</option>
                 <option value="men">Men</option>
                 <option value="unisex">Unisex</option>
+            </select>
+
+            <!-- Sizing System -->
+            <label for="sizeSystem">Sizing System *</label>
+            <select id="sizeSystem" name="sizeSystem" required>
+                <option value="">Select sizing system</option>
+                <option value="alpha">Alpha</option>
+                <option value="numerical">Numerical</option>
+                <option value="shoe">Shoe</option>
             </select>
 
             <!-- Size Dropdown -->
@@ -80,24 +97,6 @@
                 <option value="purple">Purple</option>
                 <option value="yellow">Yellow</option>
                 <option value="multi">Multi</option>
-            </select>
-
-            <!-- Category -->
-            <label for="category">Category *</label>
-            <select id="category" name="category" required>
-                <option value="">Select category</option>
-                <option value="tops">Tops</option>
-                <option value="bottoms">Bottoms</option>
-                <option value="shoes">Shoes</option>
-                <option value="outerwear">Outerwear</option>
-                <option value="accessories">Accessories</option>
-            </select>
-
-            <!-- Subcategory (filtered based on category) -->
-            <label for="subcategory">Subcategory *</label>
-            <select id="subcategory" name="subcategory" required>
-                <option value="">Select subcategory</option>
-                <!-- JS populates depending on selected category -->
             </select>
 
             <!-- Style Tags -->

@@ -1,0 +1,23 @@
+/* Tailwind is the primary styling framework.
+   This file is optional for any custom overrides. */
+
+/* Example custom styles (you may modify/remove): */
+
+input[type="file"]::-webkit-file-upload-button {
+  background: #000;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+  background: #333;
+}
+
+/* Image preview styling override */
+img.preview-image {
+  border-radius: 8px;
+  object-fit: cover;
+}
