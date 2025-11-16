@@ -90,6 +90,9 @@ const ProfilePage = () => {
     } else if (page === 'home') {
       // Navigate to feed
       window.location.href = '/feed';
+    } else if (page === 'likes') {
+      // Navigate to likes
+      window.location.href = '/likes';
     } else {
       alert(`${page} page coming soon! Staying on profile.`);
     }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, X, ChevronDown, SlidersHorizontal, Tag, Package, Search, MapPin } from 'lucide-react';
+import LikeActionPage from './LikeActionPage';
 
 const FEED_API_URL = 'http://localhost:3000/api/feed';
 
@@ -51,6 +52,7 @@ const FeedPage = () => {
   const [currentListing, setCurrentListing] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showLikeAction, setShowLikeAction] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [filters, setFilters] = useState({
@@ -109,9 +111,7 @@ const FeedPage = () => {
   }, [userId]);
 
   const handleLike = () => {
-    console.log('Liked:', currentListing.id);
-    // TODO: Send like to backend
-    fetchFeedListing(); // Load next listing
+    setShowLikeAction(true);
   };
 
   const handleIgnore = () => {
@@ -124,6 +124,15 @@ const FeedPage = () => {
     // TODO: Navigate to user profile page
   };
 
+  const handleLikeActionBack = () => {
+    setShowLikeAction(false);
+  };
+
+  const handleLikeActionSuccess = () => {
+    setShowLikeAction(false);
+    fetchFeedListing(); // Load next listing
+  };
+
   const handleNavigate = (page) => {
     setActivePage(page);
     if (page === 'profile') {
@@ -131,6 +140,8 @@ const FeedPage = () => {
     } else if (page === 'home') {
       // Already on feed
       fetchFeedListing();
+    } else if (page === 'likes') {
+      window.location.href = '/likes';
     } else {
       alert(`${page} page coming soon!`);
     }
@@ -191,6 +202,16 @@ const FeedPage = () => {
           </div>
         </div>
       </div>
+    );
+  }
+
+  if (showLikeAction) {
+    return (
+      <LikeActionPage 
+        targetListing={currentListing}
+        onBack={handleLikeActionBack}
+        onSuccess={handleLikeActionSuccess}
+      />
     );
   }
 
