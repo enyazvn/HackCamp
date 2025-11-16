@@ -1,6 +1,7 @@
 # RENEW'D
 
-### RENEW'D is a match-based shopping experience that lets users refresh their wardrobe without spending any money!
+RENEW'D is a match-based shopping experience that lets users refresh their wardrobe without spending any money!
+
 
 **Buying new clothes can be expensive.**
 
