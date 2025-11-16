@@ -5,56 +5,56 @@ const ProfilePage = () => {
   const [activePage, setActivePage] = useState('profile');
   
   const profile = {
-    firstName: 'Rae Lene',
+    firstName: 'Tony Stark',
     location: 'Vancouver',
-    profileImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop',
-    coverImage: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=200&fit=crop',
+    profileImage: 'https://images.squarespace-cdn.com/content/v1/51b3dc8ee4b051b96ceb10de/e94793b4-4a21-43bf-811c-17634987953c/Screenshot+%281555%29.jpg?w=200&h=200&fit=crop',
+    coverImage: 'https://www.shutterstock.com/shutterstock/videos/3794226451/thumb/1.jpg?ip=x480?w=400&h=200&fit=crop',
     sizing: ['XS', 'S'],
     style: ['Y2K', 'Officewear'],
-    preferredMeetup: 'ubc, skytrain, etc.',
-    bio: 'Looking for sweaters please! Happy to bundle',
+    preferredMeetup: 'UBC, Commercial-Broadway skytrain, etc.',
+    bio: 'Looking for suits ‼️ Can bundle swap',
     listings: [
       {
         id: 1,
-        image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=300&h=300&fit=crop',
-        size: 'XS',
-        name: 'Brandy Melville Waldo...',
-        status: 'Active'
+        image: "https://i.etsystatic.com/35783435/r/il/212db5/5143440695/il_fullxfull.5143440695_nujs.jpg?w=300&h=300&fit=crop",
+        size: "XL",
+        name: "Iron Man Mark III Helmet",
+        status: "Active"
       },
       {
         id: 2,
-        image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=300&h=300&fit=crop',
-        size: 'XS',
-        name: 'Brandy Melville Waldo...',
-        status: 'Active'
+        image: "https://m.media-amazon.com/images/I/81FQaupow1L.jpg?w=300&h=300&fit=crop",
+        size: "L",
+        name: "Iron Man Arc Reactor Display",
+        status: "Active"
       },
       {
         id: 3,
-        image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=300&h=300&fit=crop',
-        size: 'XS',
-        name: 'Brandy Melville Waldo...',
-        status: 'Active'
+        image: "https://upload.wikimedia.org/wikipedia/en/4/4a/Iron_Man_Mark_III_armor_from_Iron_Man_%282008_film%29.jpg?w=300&h=300&fit=crop",
+        size: "M",
+        name: "Iron Man Suit Figure (Mark 85)",
+        status: "Active"
       },
       {
         id: 4,
-        image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=300&h=300&fit=crop',
-        size: 'XS',
-        name: 'Brandy Melville Waldo...',
-        status: 'Pending'
+        image: "https://static0.srcdn.com/wordpress/wp-content/uploads/2019/05/Iron-Man-Gauntlet.jpg?w=300&h=300&fit=crop",
+        size: "L",
+        name: "Iron Man Gauntlet Replica",
+        status: "Pending"
       },
       {
         id: 5,
-        image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=300&h=300&fit=crop',
-        size: 'XS',
-        name: 'Brandy Melville Waldo...',
-        status: 'Sold'
+        image: "https://www.sideshow.com/storage/product-images/907954/iron-man-mark-50-battle-damaged-helmet_marvel_gallery_62434106d43d4.jpg?w=300&h=300&fit=crop",
+        size: "XL",
+        name: "Iron Man Helmet (Battle-Damaged)",
+        status: "Sold"
       },
       {
         id: 6,
-        image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=300&h=300&fit=crop',
-        size: 'XS',
-        name: 'Brandy Melville Waldo...',
-        status: 'Active'
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTiZGMQw4JeAVqeSA0r1nF13hYdobgsH9DZw&s?w=300&h=300&fit=crop",
+        size: "M",
+        name: "Iron Man Mark VII Figure",
+        status: "Active"
       }
     ]
   };
