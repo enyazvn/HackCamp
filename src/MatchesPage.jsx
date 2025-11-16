@@ -54,6 +54,7 @@ const MatchesPage = () => {
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showMatchActions, setShowMatchActions] = useState(false);
 
   const userId = localStorage.getItem('userId');
 
@@ -111,19 +112,8 @@ const MatchesPage = () => {
   };
 
   const formatTimestamp = (timestamp) => {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diffMs = now - date;
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMs / 3600000);
-
-    if (diffMins < 60) {
-      return `${diffMins}m ago`;
-    } else if (diffHours < 24) {
-      return `Today ${date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`;
-    } else {
-      return `Yesterday ${date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`;
-    }
+    // For demo purposes, always show "1m ago"
+    return '1m ago';
   };
 
   const handleMatchClick = (match) => {
@@ -134,6 +124,61 @@ const MatchesPage = () => {
   const handleBackToList = () => {
     setSelectedMatch(null);
     setChatHistory([]);
+    setShowMatchActions(false);
+  };
+
+  const handleCompleteMatch = async () => {
+    if (!selectedMatch) return;
+
+    if (confirm('Mark this swap as complete? This will remove it from your matches.')) {
+      try {
+        const response = await fetch(`${MATCHES_API_URL}/${selectedMatch.id}/complete`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
+        if (response.ok) {
+          alert('Match marked as complete! 🎉');
+          setShowMatchActions(false);
+          handleBackToList();
+          fetchMatches();
+        } else {
+          alert('Failed to complete match. Please try again.');
+        }
+      } catch (error) {
+        console.error('Complete match error:', error);
+        alert('Could not connect to server.');
+      }
+    }
+  };
+
+  const handleCancelMatch = async () => {
+    if (!selectedMatch) return;
+
+    if (confirm('Cancel this match? This action cannot be undone.')) {
+      try {
+        const response = await fetch(`${MATCHES_API_URL}/${selectedMatch.id}/cancel`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+
+        if (response.ok) {
+          alert('Match cancelled.');
+          setShowMatchActions(false);
+          handleBackToList();
+          fetchMatches();
+        } else {
+          alert('Failed to cancel match. Please try again.');
+        }
+      } catch (error) {
+        console.error('Cancel match error:', error);
+        alert('Could not connect to server.');
+      }
+    }
   };
 
   const handleSendMessage = async () => {
@@ -222,9 +267,32 @@ const MatchesPage = () => {
                 <p className="text-sm text-gray-500">{selectedMatch.size}</p>
               </div>
             </div>
-            <button className="p-1">
-              <MoreVertical className="w-6 h-6 text-gray-900" />
-            </button>
+            <div className="relative">
+              <button 
+                onClick={() => setShowMatchActions(!showMatchActions)}
+                className="p-1"
+              >
+                <MoreVertical className="w-6 h-6 text-gray-900" />
+              </button>
+              
+              {/* Actions Dropdown */}
+              {showMatchActions && (
+                <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50">
+                  <button
+                    onClick={handleCompleteMatch}
+                    className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                  >
+                    ✓ Mark as Complete
+                  </button>
+                  <button
+                    onClick={handleCancelMatch}
+                    className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors"
+                  >
+                    ✕ Cancel Match
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Trade Info Bar */}
@@ -280,7 +348,7 @@ const MatchesPage = () => {
                 <div key={message.id}>
                   {/* Timestamp */}
                   <div className="text-center mb-2">
-                    <span className="text-xs text-gray-400">{message.timestamp}</span>
+                    <span className="text-xs text-gray-400">1m ago</span>
                   </div>
 
                   {/* Message */}
